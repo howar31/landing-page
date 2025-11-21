@@ -23,7 +23,7 @@ export function Hero() {
         <div className="flex flex-col md:flex-row gap-12 justify-between items-start md:items-end">
           <div className="space-y-6 max-w-3xl">
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white">
-              <span className="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
+              <span className="text-blue-400 bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] supports-[background-clip:text]:text-transparent">
                 Howar31
               </span>
             </h1>
@@ -60,7 +60,7 @@ export function Hero() {
         <div className="bg-slate-950/90 backdrop-blur-md border-b border-slate-800/50">
           <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <h2 className="text-2xl font-bold tracking-tight text-white">
-              <span className="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
+              <span className="text-blue-400 bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] supports-[background-clip:text]:text-transparent">
                 Howar31
               </span>
             </h2>
