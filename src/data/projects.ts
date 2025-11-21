@@ -55,6 +55,36 @@ export const projects: Project[] = [
     tags: ["Website"],
   },
   {
+    title: "Discord Bot Usagi",
+    description: "Custom Discord bot for private server management.",
+    url: "#",
+    tags: ["Tool"],
+  },
+  {
+    title: "Warhammer 40,000: Rogue Trader 繁體中文化",
+    description: "Traditional Chinese localization project for Warhammer 40,000: Rogue Trader.",
+    url: "https://github.com/howar31/WH4KRT-TradChinese",
+    tags: ["Game", "Translation"],
+  },
+  {
+    title: "Prison Architect 繁體中文化",
+    description: "Traditional Chinese localization mod for Prison Architect.",
+    url: "https://steamcommunity.com/sharedfiles/filedetails/?id=473471025",
+    tags: ["Game", "Translation"],
+  },
+  {
+    title: "Banished 繁體中文化",
+    description: "Traditional Chinese localization mod for Banished.",
+    url: "https://steamcommunity.com/sharedfiles/filedetails/?id=338554849",
+    tags: ["Game", "Translation"],
+  },
+  {
+    title: "EVE Echoes IOP 鐵星軍團",
+    description: "Guild website for EVE Echoes Iron Order Phalanx corporation.",
+    url: "#",
+    tags: ["Community", "Game"],
+  },
+  {
     title: "GW2 PTT Netizens 公會網站",
     description: "Guild website for GW2 PTT players.",
     // url: "http://gw2.howar31.com/",
@@ -76,7 +106,7 @@ export const projects: Project[] = [
     tags: ["Website"],
   },
   {
-    title: "HX8 Chamber of Secret",
+    title: "H8 密室計畫",
     description: "A secret project.",
     // url: "http://howar31.no-ip.biz:8080/hx8/",
     url: "#",
@@ -88,17 +118,11 @@ export const projects: Project[] = [
     url: "#",
     tags: ["Tool"],
   },
-  {
-    title: "HSNG Todo List",
-    description: "Todo list application.",
-    url: "#",
-    tags: ["Tool"],
-  },
 ];
 
 export const socialLinks = [
   {
     title: "GitHub",
-    url: "https://github.com/howar31",
+    url: "https://github.com/howar31/howar31-web",
   },
 ];

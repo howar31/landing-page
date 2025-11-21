@@ -1,12 +1,12 @@
 import { skillCategories } from "@/data/skills";
-import { Cpu } from "lucide-react";
+import { Layers } from "lucide-react";
 
 export function Skills() {
   return (
     <section className="max-w-6xl mx-auto px-6 py-12 border-t border-slate-900/50">
       <div className="mb-16">
         <h2 className="text-2xl font-bold text-white flex items-center gap-3 mb-4">
-          <Cpu className="w-6 h-6 text-blue-400" />
+          <Layers className="w-6 h-6 text-blue-400" />
           Tech Stack
         </h2>
         <p className="text-slate-400 max-w-2xl">
