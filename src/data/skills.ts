@@ -4,7 +4,15 @@ export const skillCategories = [
   {
     title: "Backend",
     icon: Cpu,
-    skills: ["Node.js", "TypeScript", "Golang", "PHP (Laravel)", "GraphQL", "RESTful API", "ActivityPub"],
+    skills: [
+      "Node.js",
+      "TypeScript",
+      "Golang",
+      "PHP (Laravel)",
+      "GraphQL",
+      "RESTful API",
+      "ActivityPub",
+    ],
   },
   {
     title: "Frontend",

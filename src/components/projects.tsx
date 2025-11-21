@@ -62,10 +62,14 @@ export function ProjectGrid() {
             const CardContent = (
               <>
                 <div className="flex justify-between items-start mb-4">
-                  <h3 className={cn(
-                    "font-bold text-lg transition-colors",
-                    hasLink ? "text-slate-100 group-hover:text-blue-400" : "text-slate-100"
-                  )}>
+                  <h3
+                    className={cn(
+                      "font-bold text-lg transition-colors",
+                      hasLink
+                        ? "text-slate-100 group-hover:text-blue-400"
+                        : "text-slate-100"
+                    )}
+                  >
                     {project.title}
                   </h3>
                   {hasLink && (
@@ -100,7 +104,8 @@ export function ProjectGrid() {
               </>
             );
 
-            const cardClasses = "group flex flex-col p-6 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 backdrop-blur-sm h-full";
+            const cardClasses =
+              "group flex flex-col p-6 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 backdrop-blur-sm h-full";
 
             return (
               <motion.div
@@ -116,14 +121,15 @@ export function ProjectGrid() {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={cn(cardClasses, "hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/10 cursor-pointer")}
+                    className={cn(
+                      cardClasses,
+                      "hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/10 cursor-pointer"
+                    )}
                   >
                     {CardContent}
                   </a>
                 ) : (
-                  <div className={cardClasses}>
-                    {CardContent}
-                  </div>
+                  <div className={cardClasses}>{CardContent}</div>
                 )}
               </motion.div>
             );

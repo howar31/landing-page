@@ -8,7 +8,8 @@ export interface Project {
 export const projects: Project[] = [
   {
     title: "EzTwitch",
-    description: "A lightweight Chrome extension for Twitch TV notification and popout.",
+    description:
+      "A lightweight Chrome extension for Twitch TV notification and popout.",
     url: "https://chrome.google.com/webstore/detail/eztwitch/pnapgjocmoacccjajhomkikgggcepobk/",
     tags: ["Tool"],
   },
@@ -62,7 +63,8 @@ export const projects: Project[] = [
   },
   {
     title: "Warhammer 40,000: Rogue Trader 繁體中文化",
-    description: "Traditional Chinese localization project for Warhammer 40,000: Rogue Trader.",
+    description:
+      "Traditional Chinese localization project for Warhammer 40,000: Rogue Trader.",
     url: "https://github.com/howar31/WH4KRT-TradChinese",
     tags: ["Game", "Translation"],
   },

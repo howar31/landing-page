@@ -34,17 +34,20 @@ Designed with a deep blue & purple aesthetic, featuring a responsive layout and 
 ### Installation
 
 1.  Clone the repository:
+
     ```bash
     git clone https://github.com/howar31/landing-page.git
     cd landing-page
     ```
 
 2.  Install dependencies:
+
     ```bash
     npm install
     ```
 
 3.  Run the development server:
+
     ```bash
     npm run dev
     ```
@@ -56,13 +59,17 @@ Designed with a deep blue & purple aesthetic, featuring a responsive layout and 
 All content is separated from the UI components for easy maintenance.
 
 ### 1. Hero Section
+
 Edit `src/data/hero.ts` to update:
+
 - Title & Subtitle
 - Description (supports unlimited lines)
 - Action Buttons (Blog, GitHub, etc.)
 
 ### 2. Projects
+
 Edit `src/data/projects.ts` to manage your portfolio:
+
 ```typescript
 export const projects = [
   {
@@ -76,10 +83,13 @@ export const projects = [
 ```
 
 ### 3. Skills / Tech Stack
+
 Edit `src/data/skills.ts` to update skill categories and items.
 
 ### 4. Site Metadata (SEO)
+
 Edit `src/data/config.ts` to update:
+
 - Title & Description
 - Keywords
 - OpenGraph settings

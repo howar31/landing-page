@@ -26,7 +26,9 @@ export function Skills() {
                 <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 group-hover:bg-blue-500/20 transition-colors">
                   <Icon className="w-5 h-5" />
                 </div>
-                <h3 className="font-bold text-slate-200 text-lg">{category.title}</h3>
+                <h3 className="font-bold text-slate-200 text-lg">
+                  {category.title}
+                </h3>
               </div>
 
               <div className="flex flex-wrap gap-3">
