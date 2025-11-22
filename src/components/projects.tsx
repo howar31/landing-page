@@ -2,11 +2,15 @@
 
 import { useState, useMemo } from "react";
 import { projects, moreProjects } from "@/data/projects";
-import { ExternalLink, Folder } from "lucide-react";
+import { ExternalLink, Folder, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function ProjectGrid() {
+  // Separate state for status filter (All/Public/Private) and tag filter
+  const [statusFilter, setStatusFilter] = useState<
+    "All" | "Public" | "Private"
+  >("All");
   const [selectedTag, setSelectedTag] = useState<string>("All");
 
   // Extract unique tags
@@ -15,14 +19,33 @@ export function ProjectGrid() {
     projects.forEach((project) => {
       project.tags.forEach((tag) => tags.add(tag));
     });
-    return ["All", ...Array.from(tags).sort()];
+    return Array.from(tags).sort();
   }, []);
 
   // Filter projects
   const filteredProjects = useMemo(() => {
-    if (selectedTag === "All") return projects;
-    return projects.filter((project) => project.tags.includes(selectedTag));
-  }, [selectedTag]);
+    let filtered = projects;
+
+    // Apply status filter
+    if (statusFilter === "Public") {
+      filtered = filtered.filter(
+        (project) => project.url && project.url !== "#"
+      );
+    } else if (statusFilter === "Private") {
+      filtered = filtered.filter(
+        (project) => !project.url || project.url === "#"
+      );
+    }
+
+    // Apply tag filter
+    if (selectedTag !== "All") {
+      filtered = filtered.filter((project) =>
+        project.tags.includes(selectedTag)
+      );
+    }
+
+    return filtered;
+  }, [statusFilter, selectedTag]);
 
   return (
     <section className="max-w-6xl mx-auto px-6 py-12 border-t border-slate-900/50">
@@ -32,22 +55,47 @@ export function ProjectGrid() {
           Side Projects
         </h2>
 
-        {/* Tag Filter Bar */}
-        <div className="flex flex-wrap gap-2">
-          {allTags.map((tag) => (
-            <button
-              key={tag}
-              onClick={() => setSelectedTag(selectedTag === tag ? "All" : tag)}
-              className={cn(
-                "text-xs font-medium px-3 py-1.5 rounded-full border transition-all duration-200",
-                selectedTag === tag
-                  ? "text-blue-300 bg-blue-900/50 border-blue-500/50 shadow-[0_0_10px_rgba(59,130,246,0.2)]"
-                  : "text-slate-400 bg-slate-900/50 border-slate-800 hover:border-slate-600 hover:text-slate-200"
-              )}
-            >
-              {tag}
-            </button>
-          ))}
+        <div className="flex flex-col md:flex-row gap-4 md:items-center">
+          {/* Status Filter */}
+          <div className="flex bg-slate-900/50 p-1 rounded-lg border border-slate-800">
+            {(["All", "Public", "Private"] as const).map((status) => (
+              <button
+                key={status}
+                onClick={() => setStatusFilter(status)}
+                className={cn(
+                  "text-xs font-medium px-3 py-1.5 rounded-md transition-all duration-200",
+                  statusFilter === status
+                    ? "text-blue-300 bg-blue-900/50 shadow-sm"
+                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+                )}
+              >
+                {status}
+              </button>
+            ))}
+          </div>
+
+          {/* Divider for desktop */}
+          <div className="hidden md:block w-px h-6 bg-slate-800" />
+
+          {/* Tag Filter Bar */}
+          <div className="flex flex-wrap gap-2">
+            {allTags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() =>
+                  setSelectedTag(selectedTag === tag ? "All" : tag)
+                }
+                className={cn(
+                  "text-xs font-medium px-3 py-1.5 rounded-full border transition-all duration-200",
+                  selectedTag === tag
+                    ? "text-blue-300 bg-blue-900/50 border-blue-500/50 shadow-[0_0_10px_rgba(59,130,246,0.2)]"
+                    : "text-slate-400 bg-slate-900/50 border-slate-800 hover:border-slate-600 hover:text-slate-200"
+                )}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -73,7 +121,9 @@ export function ProjectGrid() {
                     >
                       {project.title}
                     </h3>
-                    {hasLink && (
+                    {!hasLink ? (
+                      <Lock className="w-5 h-5 text-slate-500 transition-colors" />
+                    ) : (
                       <ExternalLink className="w-5 h-5 text-slate-500 group-hover:text-blue-400 transition-colors" />
                     )}
                   </div>
