@@ -1,5 +1,4 @@
 import { socialLinks } from "@/data/projects";
-import { Github } from "lucide-react";
 
 export function Footer() {
   return (
@@ -11,7 +10,6 @@ export function Footer() {
 
         <div className="flex gap-6">
           {socialLinks.map((link) => {
-            const Icon = Github; // Currently only GitHub is supported
             return (
               <a
                 key={link.title}
@@ -21,7 +19,7 @@ export function Footer() {
                 className="text-slate-500 hover:text-white transition-colors"
                 aria-label={link.title}
               >
-                <Icon className="w-5 h-5" />
+                <link.icon className="w-5 h-5" />
               </a>
             );
           })}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { projects } from "@/data/projects";
+import { projects, moreProjects } from "@/data/projects";
 import { ExternalLink, Folder } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -157,6 +157,18 @@ export function ProjectGrid() {
           No projects found.
         </div>
       )}
+
+      <div className="flex justify-end mt-8">
+        <a
+          href={moreProjects.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all duration-200"
+        >
+          <moreProjects.icon className="w-4 h-4" />
+          <span className="text-sm font-medium">{moreProjects.text}</span>
+        </a>
+      </div>
     </section>
   );
 }
