@@ -1,7 +1,7 @@
 export const siteConfig = {
   title: "Howar31 - Web Developer",
   description:
-    "Personal landing page of Howar31, a web developer and side project enthusiast with a strong background in backend engineering.",
+    "Howar31, a passionate web developer and open source enthusiast with deep roots in backend engineering and cloud infrastructure.",
   keywords: [
     "Web Developer",
     "Backend Engineer",
@@ -17,7 +17,7 @@ export const siteConfig = {
     url: "https://howar31.com",
     title: "Howar31 - Web Developer",
     description:
-      "Personal landing page of Howar31, a web developer and side project enthusiast with a strong background in backend engineering.",
+      "Howar31, a passionate web developer and open source enthusiast with deep roots in backend engineering and cloud infrastructure.",
     siteName: "Howar31 Portfolio",
   },
   icons: {
