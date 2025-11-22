@@ -163,14 +163,6 @@ export const projects: Project[] = [
   },
 ];
 
-export const socialLinks = [
-  {
-    title: "GitHub",
-    url: "https://github.com/howar31/howar31-web",
-    icon: Github,
-  },
-];
-
 export const moreProjects = {
   text: "More on GitHub",
   url: "https://github.com/howar31",

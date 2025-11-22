@@ -1,4 +1,4 @@
-import { socialLinks } from "@/data/projects";
+import { socialLinks } from "@/data/footer";
 
 export function Footer() {
   return (
@@ -18,6 +18,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="text-slate-500 hover:text-white transition-colors"
                 aria-label={link.title}
+                title={link.title}
               >
                 <link.icon className="w-5 h-5" />
               </a>
