@@ -7,10 +7,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      screens: {
+        feed: "880px",
+      },
+      fontFamily: {
+        sans: ["var(--font-noto-sans)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+        mono: ["var(--font-jetbrains-mono)", "Consolas", "Monaco", "monospace"],
+        display: ["var(--font-atkinson)", "var(--font-noto-sans)", "sans-serif"],
       },
     },
   },

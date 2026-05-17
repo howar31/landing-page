@@ -1,18 +1,26 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { siteConfig } from "@/data/config";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
+const notoSansTC = localFont({
+  src: "./fonts/NotoSansTC.woff2",
+  variable: "--font-noto-sans",
+  display: "swap",
+});
+
+const atkinson = localFont({
+  src: "./fonts/AtkinsonHyperlegibleNext.woff2",
+  variable: "--font-atkinson",
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-jetbrains-mono",
+  display: "swap",
 });
-
-import { siteConfig } from "@/data/config";
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -25,13 +33,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-black text-white`}
+        className={`${notoSansTC.variable} ${atkinson.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
         {children}
       </body>
