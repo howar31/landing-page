@@ -1,10 +1,12 @@
+import type { CSSProperties } from "react";
+
 // Fixed glow color values derived from #8b5cf6 (r1,g1,b1) and #a855f7 (r2,g2,b2)
 // Mid-blend: r3=Math.round((139+168)/2)=153, g3=Math.round((92+85)/2)=88, b3=Math.round((246+247)/2)=246
 // intensity = 1.6
 
 const INTENSITY = 1.6;
 
-const BLOB_BASE: React.CSSProperties = {
+const BLOB_BASE: CSSProperties = {
   position: "absolute",
   borderRadius: "50%",
   filter: "blur(90px)",
@@ -77,7 +79,6 @@ export function AmbientGlow() {
       />
       {/* Scanline */}
       <div
-        aria-hidden
         style={{
           position: "absolute",
           inset: 0,
