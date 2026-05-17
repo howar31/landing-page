@@ -32,7 +32,7 @@ export function ProjectGrid() {
   const MoreIcon = moreProjects.icon;
 
   return (
-    <section className="max-w-6xl mx-auto px-6 py-12 border-t border-white/[0.06]">
+    <section className="py-12 border-t border-white/[0.06]">
       <SectionTitle kicker="// works" title="Things I've made" count={projects.length} />
 
       <GithubFeed />
@@ -84,7 +84,7 @@ export function ProjectGrid() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 font-mono text-[13px] text-white/50 hover:text-white/85 transition-colors"
         >
-          {moreProjects.text} ↗
+          {moreProjects.text}
           <MoreIcon className="w-3.5 h-3.5" />
         </a>
       </div>
