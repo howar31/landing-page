@@ -1,0 +1,245 @@
+/* Howar31 Design System — Foundations
+ * Distilled from howar31/landing-page (Tailwind + globals), howar31-blog (SCSS),
+ * and howar31/hype-sign (PWA). Design language: deep slate canvas, blue→violet
+ * gradient brand, drifting purple glow, frosted-glass surfaces.
+ */
+
+/* -----------------------------------------------------------
+ * Web Fonts (subset .woff2 lifted from hype-sign/public/fonts)
+ * --------------------------------------------------------- */
+@font-face {
+  font-family: "Noto Sans TC";
+  src: url("./fonts/NotoSansTC.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Noto Serif TC";
+  src: url("./fonts/NotoSerifTC.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "LXGW WenKai TC";
+  src: url("./fonts/LXGWWenKaiTC-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("./fonts/AtkinsonHyperlegibleNext.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Code monospace — JetBrains Mono (per user). Latin glyphs only;
+ * CJK fallback is Noto Sans Mono CJK TC for Traditional Chinese in code.
+ */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;600&display=swap");
+
+:root {
+  /* ---- Color scales (lifted verbatim from blog SCSS / Tailwind defaults) -- */
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --violet-400: #a78bfa;
+  --violet-500: #8b5cf6;     /* glow color */
+  --violet-purple: #a855f7;  /* second glow color */
+
+  --slate-50:  #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+
+  /* ---- Semantic — Dark (canonical / default — site uses dark always) ----- */
+  --bg-canvas: rgb(2, 6, 23);              /* slate-950 */
+  --bg-soft: rgba(255, 255, 255, 0.05);
+  --bg-active: rgba(96, 165, 250, 0.15);
+  --bg-card: rgba(15, 23, 42, 0.5);        /* slate-900/50 */
+  --bg-card-hover: rgba(15, 23, 42, 0.8);
+
+  --fg-1: #ffffff;                          /* primary text */
+  --fg-2: rgba(255, 255, 255, 0.7);         /* secondary / body */
+  --fg-3: rgba(255, 255, 255, 0.6);         /* meta / lighter */
+  --fg-4: var(--slate-500);                 /* muted / footer */
+  --fg-mono: var(--slate-300);
+
+  --border-1: rgba(255, 255, 255, 0.1);     /* slate-800 equivalent */
+  --border-2: rgba(255, 255, 255, 0.15);
+  --border-card: var(--slate-800);
+  --border-card-hover: rgba(59, 130, 246, 0.3); /* blue-500/30 */
+
+  --brand: var(--blue-400);
+  --brand-grad-from: var(--blue-400);
+  --brand-grad-to: var(--violet-400);
+  --brand-grad: linear-gradient(to right, var(--blue-400), var(--violet-400));
+
+  /* Liquid-glass tokens (hype-sign settings panel + blog modal/figure) */
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-bg-strong: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-blur: 24px;
+  --glass-blur-soft: 20px;
+
+  /* Ambient glow (drifting purple, behind everything) */
+  --glow-1: rgba(139, 92, 246, 0.15);
+  --glow-2: rgba(168, 85, 247, 0.10);
+
+  /* Shadow system */
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.40);
+  --shadow-card-hover: 0 8px 20px rgba(0, 0, 0, 0.50);
+  --shadow-blue:  0 6px 18px rgba(96, 165, 250, 0.25);
+  --shadow-blue-strong: 0 10px 24px rgba(96, 165, 250, 0.35);
+  --shadow-violet-glow: 0 0 32px rgba(167, 139, 250, 0.12);
+  --shadow-figure-hover:
+    0 24px 48px rgba(0, 0, 0, 0.18),
+    0 8px 16px rgba(0, 0, 0, 0.10),
+    0 0 32px rgba(167, 139, 250, 0.12);
+
+  /* Status / hint colors */
+  --tip:     var(--blue-500);
+  --tip-bg:  rgba(59, 130, 246, 0.08);
+  --warning: #f59e0b;
+  --warning-bg: rgba(245, 158, 11, 0.08);
+  --danger:  #ef4444;
+  --danger-bg: rgba(239, 68, 68, 0.08);
+
+  /* ---- Spacing / radius (Tailwind-aligned) ----------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-pill: 999px;
+
+  /* ---- Type stacks ----------------------------------------------------- */
+  --font-sans: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Noto Serif TC", "Times New Roman", serif;
+  --font-kai: "LXGW WenKai TC", "Noto Serif TC", serif;          /* CJK calligraphy */
+  --font-display: "Atkinson Hyperlegible Next", var(--font-sans);
+  --font-mono: "JetBrains Mono", "Noto Sans Mono", "Noto Sans Mono CJK TC",
+    "Sarasa Mono TC", "Consolas", "Monaco", "Courier New", monospace;
+
+  /* ---- Type scale (matches landing-page hero + blog SCSS) -------------- */
+  --fs-hero:    72px;  /* md:text-7xl */
+  --fs-hero-sm: 48px;  /* text-5xl mobile */
+  --fs-h1:      35.2px; /* 2.2rem */
+  --fs-h2:      26.4px; /* 1.65rem */
+  --fs-h3:      21.6px; /* 1.35rem */
+  --fs-h4:      18.4px; /* 1.15rem */
+  --fs-lead:    24px;   /* hero subtitle */
+  --fs-body:    16px;
+  --fs-meta:    14px;
+  --fs-small:   12.5px;
+  --fs-code:    13.6px; /* 0.85em of body */
+
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+  --fw-bold:    700;
+
+  --lh-tight: 1.25;
+  --lh-snug:  1.45;
+  --lh-body:  1.7;
+
+  --tracking-tight: -0.02em;
+  --tracking-wide:   0.08em; /* uppercase eyebrows */
+}
+
+/* =============================================================
+ * Semantic element styles — drop-in for any HTML doc that
+ * imports this file. Mirrors the blog/landing-page treatments.
+ * ============================================================= */
+html, body {
+  background-color: var(--bg-canvas);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+  margin: 2rem 0 1rem;
+}
+h1 { font-size: var(--fs-h1); margin-top: 1rem; }
+h2 { font-size: var(--fs-h2); padding-bottom: 0.3rem; border-bottom: 1px solid var(--border-1); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+
+.h-display, .hero-title {
+  font-size: var(--fs-hero);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  background: var(--brand-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+p { margin: 1rem 0; color: var(--fg-2); }
+small, .text-meta { font-size: var(--fs-meta); color: var(--fg-3); }
+.text-eyebrow {
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--fg-3);
+}
+
+a {
+  color: var(--brand);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+a:hover { color: var(--violet-400); }
+
+code, kbd, samp {
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  background-color: var(--slate-900);
+  color: var(--slate-300);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+/* Pill / chip — used for tag filters, project tags */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-card);
+  background: rgba(15, 23, 42, 0.5);
+  color: var(--fg-3);
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+  transition: all 0.2s ease;
+}
+.pill:hover { border-color: var(--slate-600); color: var(--fg-1); }
+.pill--active {
+  color: #93c5fd;
+  background: rgba(30, 58, 138, 0.5);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+}
