@@ -6,6 +6,8 @@ export interface Project {
   url: string;
   tags: string[];
   imageUrl?: string;
+  year?: string;
+  language?: string;
 }
 
 export const projects: Project[] = [
@@ -16,6 +18,8 @@ export const projects: Project[] = [
     url: "https://github.com/howar31/landing-page",
     tags: ["Design", "Website"],
     imageUrl: "",
+    year: "2025",
+    language: "TypeScript",
   },
   {
     title: "Star Citizen 中文社群網",
@@ -31,6 +35,8 @@ export const projects: Project[] = [
     tags: ["Game", "Tool", "Website"],
     imageUrl:
       "https://github.com/howar31/GW2Timer/raw/gh-pages/GW2Timer_Preview_en.png",
+    year: "2014",
+    language: "JavaScript",
   },
   {
     title: "PTT 推樂透",
@@ -38,6 +44,8 @@ export const projects: Project[] = [
     url: "https://pttlottery.howar31.com/",
     tags: ["Tool", "Website"],
     imageUrl: "https://github.com/howar31/PTTLottery/raw/gh-pages/preview.png",
+    year: "2014",
+    language: "JavaScript",
   },
   {
     title: "Countdown",
@@ -45,6 +53,8 @@ export const projects: Project[] = [
     url: "https://countdown.howar31.com/",
     tags: ["Tool", "Website"],
     imageUrl: "https://github.com/howar31/countdown/raw/gh-pages/preview2.png",
+    year: "2015",
+    language: "JavaScript",
   },
   {
     title: "假的 信用卡安全掃描系統",
@@ -53,6 +63,7 @@ export const projects: Project[] = [
     url: "https://howar31.github.io/prank_credit_card_scan/",
     tags: ["Tool", "Website"],
     imageUrl: "",
+    year: "2019",
   },
   {
     title: "早餐計算機",
@@ -61,6 +72,8 @@ export const projects: Project[] = [
     url: "https://howar31.github.io/breakfast/",
     tags: ["Tool", "Website"],
     imageUrl: "",
+    year: "2017",
+    language: "JavaScript",
   },
   {
     title: "NeoPlurkCSS3",
@@ -69,6 +82,8 @@ export const projects: Project[] = [
     tags: ["Design"],
     imageUrl:
       "https://camo.githubusercontent.com/234ab2d21c889aa2e587ded3510ed0b8505b9e5cca2c077f3f472cc44105599e/687474703a2f2f332e62702e626c6f6773706f742e636f6d2f2d30744471616f6251386e6b2f55555a57626657645a5f492f41414141414141414a35512f6c66766b6a4f772d4348592f73313630302f312e6e6f6c6f67696e2e706e67",
+    year: "2013",
+    language: "CSS",
   },
   {
     title: "EzTwitch",
@@ -78,6 +93,8 @@ export const projects: Project[] = [
     tags: ["Tool"],
     imageUrl:
       "https://github.com/howar31/EzTwitch/blob/master/deploy/images/icon.png?raw=true",
+    year: "2016",
+    language: "JavaScript",
   },
   {
     title: "中華民國外交部駐外單位網站",
@@ -108,6 +125,7 @@ export const projects: Project[] = [
     tags: ["Game", "Translation"],
     imageUrl:
       "https://github.com/howar31/WH4KRT-TradChinese/raw/main/screenshots/20241110231725_1.jpg",
+    year: "2024",
   },
   {
     title: "Prison Architect 繁體中文化",
@@ -116,6 +134,7 @@ export const projects: Project[] = [
     tags: ["Game", "Translation"],
     imageUrl:
       "https://images.steamusercontent.com/ugc/441732331243214089/AC1E70D832FC116B983627C30FEAF9D86D4467FC/?imw=268&imh=268&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true",
+    year: "2015",
   },
   {
     title: "Banished 繁體中文化",
@@ -131,6 +150,8 @@ export const projects: Project[] = [
     url: "https://github.com/howar31/Trove-AHK-AutoFish",
     tags: ["Game", "Tool"],
     imageUrl: "",
+    year: "2015",
+    language: "AutoHotkey",
   },
   {
     title: "Discord Bot Usagi",
@@ -160,6 +181,8 @@ export const projects: Project[] = [
     url: "https://github.com/howar31/oh-my-zsh-powerline-theme",
     tags: ["Design", "Tool"],
     imageUrl: "",
+    year: "2013",
+    language: "Shell",
   },
 ];
 
