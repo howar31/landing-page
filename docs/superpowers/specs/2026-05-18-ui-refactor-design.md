@@ -39,6 +39,9 @@ plus `colors_and_type.css` and `fonts/` / `assets/`.
     sticky.
 - `880px` is a custom breakpoint — add `screens: { feed: '880px' }` to the
   Tailwind config (or use a raw media query).
+- The handoff design only collapses columns at 880px and has no phone-specific
+  tuning. The refactor adds explicit mobile polish (responsive padding and font
+  sizes, no horizontal overflow) for phone widths 360–414px — see §10.
 
 ## 4. Components
 
@@ -297,7 +300,7 @@ Embedding a key in client code would leak it.
 - `npm run lint` passes.
 - Dev-server visual review against the `ui_kits/landing-page` reference.
 - Responsive check: two-column ≥ 880px, single column < 880px (IdentityCard not
-  sticky).
+  sticky); at 360–414px no horizontal scroll and no clipped/overlapping text.
 - `prefers-reduced-motion` — confirm glow/equalizer/wave animations stop.
 - Data-layer manual checks: live GitHub/RSS data renders; simulate fetch failure
   (offline / blocked request) and confirm graceful fallback; confirm
