@@ -16,6 +16,7 @@ const isPrivate = (url: string | undefined): boolean =>
 
 export function ProjectRow({ project, onTagClick }: ProjectRowProps) {
   const [hover, setHover] = useState(false);
+  const langColor = languageColor(project.language);
 
   const titleRow = (
     <div className="flex items-center gap-2.5 flex-wrap">
@@ -26,13 +27,13 @@ export function ProjectRow({ project, onTagClick }: ProjectRowProps) {
         <span
           className="inline-flex items-center gap-[5px] font-mono text-[11px] px-2 py-0.5 rounded-full"
           style={{
-            background: languageColor(project.language) + "22",
-            color: languageColor(project.language),
+            background: langColor + "22",
+            color: langColor,
           }}
         >
           <span
             className="w-1.5 h-1.5 rounded-full shrink-0"
-            style={{ background: languageColor(project.language) }}
+            style={{ background: langColor }}
           />
           {project.language}
         </span>
@@ -93,7 +94,7 @@ export function ProjectRow({ project, onTagClick }: ProjectRowProps) {
       onMouseLeave={() => setHover(false)}
       className={cn(
         "grid gap-[18px] items-start p-[18px_16px] rounded-xl border",
-        "color-inherit no-underline",
+        "no-underline",
         "transition-[background,border-color] duration-200 ease-[ease]",
       )}
       style={{
