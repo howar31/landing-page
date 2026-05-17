@@ -71,8 +71,7 @@ export function ProjectRow({ project, onTagClick }: ProjectRowProps) {
   if (isPrivate(project.url)) {
     return (
       <div
-        className="grid gap-[18px] items-start p-[18px_16px] rounded-xl border border-white/[0.06]"
-        style={{ gridTemplateColumns: "64px 1fr 24px" }}
+        className="grid gap-x-[14px] feed:gap-x-[18px] gap-y-[18px] items-start p-[18px_16px] rounded-xl border border-white/[0.06] grid-cols-[46px_1fr_24px] feed:grid-cols-[64px_1fr_24px]"
       >
         <div className="font-mono text-[12px] text-white/40 pt-1">
           {project.year ?? ""}
@@ -93,12 +92,12 @@ export function ProjectRow({ project, onTagClick }: ProjectRowProps) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       className={cn(
-        "grid gap-[18px] items-start p-[18px_16px] rounded-xl border",
+        "grid gap-x-[14px] feed:gap-x-[18px] gap-y-[18px] items-start p-[18px_16px] rounded-xl border",
+        "grid-cols-[46px_1fr_24px] feed:grid-cols-[64px_1fr_24px]",
         "no-underline",
         "transition-[background,border-color] duration-200 ease-[ease]",
       )}
       style={{
-        gridTemplateColumns: "64px 1fr 24px",
         background: hover ? "rgba(15,23,42,0.6)" : "transparent",
         borderColor: hover ? "rgba(96,165,250,0.25)" : "rgba(255,255,255,0.06)",
       }}

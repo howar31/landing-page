@@ -28,9 +28,8 @@ export function IdentityCard() {
 
   return (
     <aside
-      className="feed:sticky feed:top-7 feed:self-start w-full"
+      className="feed:sticky feed:top-7 feed:self-start w-full p-5 feed:p-7"
       style={{
-        padding: 28,
         borderRadius: 18,
         background: "rgba(15,23,42,0.55)",
         border: "1px solid rgba(255,255,255,0.08)",
@@ -41,10 +40,9 @@ export function IdentityCard() {
     >
       {/* Avatar */}
       <div
+        className="w-[110px] h-[110px] feed:w-[132px] feed:h-[132px]"
         style={{
           position: "relative",
-          width: 132,
-          height: 132,
           borderRadius: "50%",
           padding: 3,
           background: `linear-gradient(135deg,${ACCENT2},${ACCENT})`,

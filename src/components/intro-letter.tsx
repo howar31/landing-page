@@ -2,10 +2,10 @@ import { introLetter } from "@/data/identity";
 
 export function IntroLetter() {
   return (
-    <article className="pt-7 px-1">
+    <article className="pt-6 feed:pt-8 pb-2">
       {/* Greeting + wave emoji */}
       <div
-        className="text-[38px] font-bold tracking-[-0.02em] leading-[1.1] bg-clip-text text-transparent"
+        className="text-3xl feed:text-[38px] font-bold tracking-[-0.02em] leading-[1.1] bg-clip-text text-transparent"
         style={{
           backgroundImage: "linear-gradient(to right, #fff 30%, #a78bfa)",
         }}

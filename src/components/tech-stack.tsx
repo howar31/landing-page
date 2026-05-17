@@ -3,7 +3,7 @@ import { SectionTitle } from "@/components/section-title";
 
 export function TechStack() {
   return (
-    <section>
+    <section className="py-10 feed:py-12 border-t border-white/[0.06]">
       <SectionTitle kicker="// stack" title="What I build with" />
 
       <ul
@@ -13,9 +13,8 @@ export function TechStack() {
         {skillCategories.map((category) => (
           <li
             key={category.title}
-            className="grid items-baseline gap-[14px] py-4 px-1"
+            className="grid items-baseline gap-x-[10px] feed:gap-x-[14px] gap-y-1 py-4 grid-cols-[20px_90px_1fr] feed:grid-cols-[20px_110px_1fr]"
             style={{
-              gridTemplateColumns: "20px 110px 1fr",
               borderBottom: "1px solid rgba(255,255,255,0.06)",
             }}
           >

@@ -3,10 +3,10 @@ import { cn } from "@/lib/utils";
 
 export function SupportBlock() {
   return (
-    <section className="py-12 border-t border-white/[0.06]">
+    <section className="py-10 feed:py-12 border-t border-white/[0.06]">
       <div
         className={cn(
-          "p-[26px] rounded-2xl border",
+          "p-5 feed:p-[26px] rounded-2xl border",
           "bg-gradient-to-br from-blue-400/[0.08] to-violet-400/[0.06]",
           "border-violet-400/20"
         )}

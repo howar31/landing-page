@@ -17,7 +17,7 @@ export function SectionTitle({ kicker, title, count }: SectionTitleProps) {
       </div>
       {/* Title row */}
       <div className="mt-2 flex items-baseline justify-between gap-4">
-        <h2 className="m-0 text-[26px] font-semibold tracking-[-0.02em] text-white">
+        <h2 className="m-0 text-[22px] feed:text-[26px] font-semibold tracking-[-0.02em] text-white">
           {title}
         </h2>
         {count != null ? (

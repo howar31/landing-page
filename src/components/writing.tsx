@@ -9,7 +9,7 @@ export function Writing() {
   const { data, loading, error } = useRemoteData(fetchBlogPosts);
 
   return (
-    <section className="py-12 border-t border-white/[0.06]">
+    <section className="py-10 feed:py-12 border-t border-white/[0.06]">
       <SectionTitle kicker="// writing" title="From the blog" />
 
       {/* Post list area */}
@@ -19,8 +19,7 @@ export function Writing() {
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
-                className="grid gap-[18px] py-4 border-b border-white/[0.06] animate-pulse"
-                style={{ gridTemplateColumns: "110px 1fr" }}
+                className="grid gap-x-[14px] feed:gap-x-[18px] gap-y-2 py-4 border-b border-white/[0.06] animate-pulse grid-cols-[80px_1fr] feed:grid-cols-[110px_1fr]"
               >
                 {/* Date placeholder */}
                 <div className="h-3 w-16 rounded bg-white/10 mt-[3px]" />
@@ -42,8 +41,7 @@ export function Writing() {
               href={post.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="grid gap-[18px] py-4 border-b border-white/[0.06] text-white/85 no-underline transition-colors duration-200 hover:text-white group"
-              style={{ gridTemplateColumns: "110px 1fr" }}
+              className="grid gap-x-[14px] feed:gap-x-[18px] gap-y-2 py-4 border-b border-white/[0.06] text-white/85 no-underline transition-colors duration-200 hover:text-white group grid-cols-[80px_1fr] feed:grid-cols-[110px_1fr]"
             >
               {/* Date column */}
               <div className="font-mono text-[12px] text-white/40 pt-[3px]">
