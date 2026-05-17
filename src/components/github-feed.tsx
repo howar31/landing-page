@@ -47,7 +47,7 @@ export function GithubFeed() {
                   {repo.name}
                 </a>
                 {repo.description && (
-                  <div className="mt-0.5 text-[12px] leading-[1.5] text-white/55 truncate">
+                  <div className="mt-0.5 text-[12px] leading-[1.5] text-white/55 line-clamp-2">
                     {repo.description}
                   </div>
                 )}

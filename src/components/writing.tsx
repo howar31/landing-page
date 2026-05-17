@@ -52,7 +52,7 @@ export function Writing() {
                 <div className="text-[16px] font-semibold tracking-[-0.01em]">
                   {post.title}
                 </div>
-                <div className="mt-1.5 text-[14px] leading-[1.55] text-white/60">
+                <div className="mt-1.5 text-[14px] leading-[1.55] text-white/60 line-clamp-2">
                   {post.excerpt}
                 </div>
               </div>
