@@ -37,8 +37,13 @@ export function ProjectGrid() {
 
       <GithubFeed />
 
+      {/* Featured work kicker */}
+      <div className="mt-8 font-mono text-[11px] uppercase tracking-[0.14em] text-white/50">
+        ↳ Featured work
+      </div>
+
       {/* Tag filter pills */}
-      <div className="mt-6 flex flex-wrap gap-2">
+      <div className="mt-3 flex flex-wrap gap-2">
         {allTags.map((tag) => (
           <button
             key={tag}
