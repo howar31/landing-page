@@ -1,0 +1,128 @@
+# landing-page — SPEC
+
+## Purpose
+
+Personal landing page for Howar31, served as the public face of the brand at
+[howar31.com](https://howar31.com). It is a single static page presenting an
+identity card, an introduction, a tech stack, a project portfolio, recent blog
+posts, and a support call-to-action. Visitors are the audience; there is no
+backend and no authentication.
+
+## Architecture
+
+- **Framework:** Next.js 14 (App Router), React 18, TypeScript. Output is a
+  fully static export (`output: export` in `next.config.mjs`) — no server
+  runtime; the build emits a static site to `out/`.
+- **Styling:** Tailwind CSS 3 with design tokens (CSS custom properties) and
+  `@keyframes` defined in `src/app/globals.css`. A custom `feed:` breakpoint
+  (880px) drives the responsive two-column ↔ single-column switch.
+- **Layout:** A two-column "personal card" layout — a sticky `IdentityCard`
+  rail plus a scrolling content feed. Collapses to a single column below 880px.
+- **Fonts:** Noto Sans TC and Atkinson Hyperlegible Next are self-hosted
+  (`src/app/fonts/*.woff2`) via `next/font/local`; JetBrains Mono via
+  `next/font/google`.
+- **Data:** Static content lives in `src/data/`. Two parts are fetched live in
+  the browser (no API keys, public endpoints):
+  - GitHub API (`api.github.com`) — public repo count and the most recently
+    pushed repos.
+  - The blog RSS feed (`blog.howar31.com/index.xml`) — recent posts and post
+    count.
+  Both go through `useRemoteData`, are cached in `localStorage` with a 30-minute
+  TTL, show loading skeletons, and degrade gracefully (the section hides or a
+  `—` placeholder shows) on failure.
+- **Data flow:** Server components compose the page; components that fetch or
+  hold state are client components (`"use client"`). Fetch + parse helpers in
+  `src/lib/` are pure where possible and unit-tested with Vitest.
+
+## Layout
+
+```
+landing-page/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx          # Root layout; font wiring; metadata from config
+│   │   ├── page.tsx            # Page composition (two-column grid)
+│   │   ├── globals.css         # Design tokens (CSS vars) + keyframes
+│   │   └── fonts/              # Self-hosted woff2 (Noto Sans TC, Atkinson)
+│   ├── components/             # 12 presentational/section components
+│   │   ├── ambient-glow.tsx    # Drifting purple radial-gradient background
+│   │   ├── top-bar.tsx         # Wordmark + status line
+│   │   ├── identity-card.tsx   # Sticky left rail; live repo/post counts
+│   │   ├── section-title.tsx   # Shared kicker + title + count
+│   │   ├── intro-letter.tsx    # "Hi there" introduction block
+│   │   ├── tech-stack.tsx      # Skill categories as a row list
+│   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip
+│   │   ├── project-row.tsx     # One curated project row
+│   │   ├── projects.tsx        # Projects section: feed + tag filter + list (exports ProjectGrid)
+│   │   ├── writing.tsx         # Live recent blog posts
+│   │   ├── support-block.tsx   # Ko-fi + donate call-to-action
+│   │   └── site-footer.tsx     # Copyright line
+│   ├── data/                   # Static content
+│   │   ├── identity.ts         # Identity, intro-letter, support copy
+│   │   ├── skills.ts           # Tech-stack categories (+ per-category color)
+│   │   ├── projects.ts         # Curated project list (+ optional year/language)
+│   │   └── config.ts           # Site metadata / SEO
+│   └── lib/                    # Data layer + utilities (+ *.test.ts)
+│       ├── github.ts           # GitHub API fetch + parseRepos
+│       ├── blog-feed.ts        # Blog RSS fetch + parseBlogFeed
+│       ├── cache.ts            # localStorage cache with TTL
+│       ├── format-date.ts      # Absolute + relative date formatting
+│       ├── languages.ts        # Language → color map
+│       ├── use-remote-data.ts  # Client hook: loading/data/error
+│       └── utils.ts            # cn() class-merge helper
+├── public/                     # CNAME, avatar, static images
+├── docs/superpowers/           # Design spec, implementation plan, reference kit
+├── next.config.mjs             # Static export config
+├── tailwind.config.ts          # feed: breakpoint, font families
+└── vitest.config.ts            # jsdom test environment
+```
+
+## Conventions
+
+- Components: kebab-case filenames, PascalCase named exports.
+- Code comments in English.
+- Tailwind utilities preferred; inline `style` only for dynamic values
+  (gradients, computed colors, keyframe animations).
+- The support / donation block must use adblock-safe DOM identifiers — no
+  class/id/`data-*`/`aria-label` containing `sponsor`, `donate`, `donation`,
+  etc. (cosmetic ad-filters would hide it).
+- Linting via `next lint` (`.eslintrc.json`, `next/core-web-vitals`).
+
+## Verification
+
+- `npm test` — Vitest (jsdom) unit tests for the `src/lib/` pure functions
+  (language colors, date formatting, cache, RSS parsing, GitHub repo parsing).
+- `npm run build` — must succeed and produce the static export in `out/`.
+- `npm run lint` — ESLint via `next lint`.
+- Manual: responsive check (two-column ≥ 880px, single column down to ~360px),
+  `prefers-reduced-motion`, and the data-fetch fallback paths.
+
+## Deploy
+
+- GitHub Actions workflow `.github/workflows/deploy.yml` builds the static
+  export and publishes it to GitHub Pages on push to `main`.
+- `public/CNAME` pins the custom domain `howar31.com`.
+- Local dev: `npm install`, then `npm run dev` (http://localhost:3000).
+
+## Known Limitations / Non-goals
+
+- No backend, no CMS — content is edited in `src/data/` files and redeployed.
+- Live data (repo count, recent repos, blog posts) is fetched client-side; it is
+  not present in the initial static HTML and is unauthenticated (GitHub's
+  60 req/hour/IP limit applies, mitigated by the localStorage cache).
+- `Project.imageUrl` is retained in the data but unused by the current
+  row-based layout (vestigial from the previous card-grid design).
+- `Project.year` / `Project.language` are backfilled only for GitHub-hosted
+  projects; non-GitHub projects leave them blank.
+
+## Key Decisions
+
+- **Static export over SSR:** the site is content-only and hosted on GitHub
+  Pages; a static export keeps hosting free and simple.
+- **Client-side live data over build-time fetch:** both the GitHub API and the
+  blog RSS feed send permissive CORS headers, so the browser fetches them
+  directly — keeping content fresh without scheduled rebuilds, at the cost of a
+  loading state and dependence on those services at view time.
+- **Curated project list:** the portfolio is an editorial list in
+  `src/data/projects.ts` (including non-GitHub work), not an automated repo
+  dump; the live GitHub strip complements it rather than replacing it.

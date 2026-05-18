@@ -1,125 +1,66 @@
 # Personal Landing Page
 
-A minimalist, performance-focused personal landing page.
-Designed with a deep blue & purple aesthetic, featuring a responsive layout and data-driven content.
+The public landing page for Howar31 — a minimalist, performance-focused
+personal site with a deep blue & purple aesthetic.
 
-**Live Demo / Example**: [howar31.com](https://howar31.com)
+**Live:** [howar31.com](https://howar31.com)
+
+## ✨ Overview
+
+A single static page built as a two-column "personal card":
+
+- **Identity card** — a sticky rail with avatar, name, tagline, live GitHub repo
+  & blog post counts, and social links.
+- **Content feed** — an introduction letter, a tech-stack list, a project
+  portfolio with a live "Latest on GitHub" strip and tag filtering, recent blog
+  posts, and a support call-to-action.
+- **Responsive** — two columns on wide screens, a single column on phones.
+- **Ambient design** — drifting purple radial glow; animations respect
+  `prefers-reduced-motion`.
 
 ## 🚀 Tech Stack
 
-- **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Deployment**: GitHub Pages (Static Export) via GitHub Actions
-- **Domain**: Custom domain [howar31.com](https://howar31.com)
+- **Framework:** [Next.js 14](https://nextjs.org/) (App Router, static export)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) with design tokens
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Fonts:** Noto Sans TC + Atkinson Hyperlegible Next (self-hosted), JetBrains Mono
+- **Tests:** [Vitest](https://vitest.dev/)
+- **Hosting:** GitHub Pages (static) via GitHub Actions, custom domain howar31.com
 
-## ✨ Features
+## 🔄 Live Data
 
-- **Minimalist Hero Section**: 100vh immersive intro with gradient text and subtle animations.
-- **Sticky Header**: Smart header that appears on scroll, responsive for mobile (icon-only) and desktop.
-- **Project Grid**: Filterable grid for Side Projects with smooth layout transitions.
-- **Tech Stack**: Categorized skills display (Backend, Frontend, Cloud, Database, AI Workflows).
-- **Data-Driven**: Content managed via structured data files in `src/data/`.
-- **Responsive Design**: Fully optimized for mobile, tablet, and desktop.
-- **Cross-Browser**: Polished support for Safari (iPhone) and Chrome.
+Two parts update themselves — fetched in the browser, no API keys, cached in
+`localStorage` for 30 minutes, with graceful fallback if a request fails:
+
+- **GitHub API** — public repo count and the most recently pushed repositories.
+- **Blog RSS** (`blog.howar31.com/index.xml`) — recent posts and post count.
 
 ## 🛠️ Getting Started
 
-### Prerequisites
+```bash
+npm install
+npm run dev      # http://localhost:3000
+```
 
-- Node.js 18+
-- npm
-
-### Installation
-
-1.  Clone the repository:
-
-    ```bash
-    git clone https://github.com/howar31/landing-page.git
-    cd landing-page
-    ```
-
-2.  Install dependencies:
-
-    ```bash
-    npm install
-    ```
-
-3.  Run the development server:
-
-    ```bash
-    npm run dev
-    ```
-
-4.  Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Other commands: `npm run build` (static export to `out/`), `npm run lint`,
+`npm test`.
 
 ## 📝 Managing Content
 
-All content is separated from the UI components for easy maintenance.
+Content is data-driven — edit the files in `src/data/`:
 
-### 1. Hero Section
-
-Edit `src/data/hero.ts` to update:
-
-- Title & Subtitle
-- Description (supports unlimited lines)
-- Action Buttons (Blog, GitHub, etc.)
-
-### 2. Projects
-
-Edit `src/data/projects.ts` to manage your portfolio:
-
-```typescript
-// Project Items
-export const projects = [
-  {
-    title: "New Project",
-    description: "Description...",
-    url: "https://example.com",
-    tags: ["Tag1", "Tag2"],
-  },
-  // ...
-];
-
-// More projects button
-export const moreProjects = {
-  text: "More on WEBSITE",
-  url: "https://example.com",
-  icon: Github, // remember to import
-};
-
-// Social Links (Footer)
-export const socialLinks = [
-  {
-    title: "SOCIAL PLATFORM",
-    url: "https://example.com",
-    icon: Github, // remember to import
-  },
-];
-```
-
-### 3. Skills / Tech Stack
-
-Edit `src/data/skills.ts` to update skill categories and items.
-
-### 4. Site Metadata (SEO)
-
-Edit `src/data/config.ts` to update:
-
-- Title & Description
-- Keywords
-- OpenGraph settings
-- Favicon path
+- **`identity.ts`** — name, handle, tagline, location, status, the intro-letter
+  copy, social links, and the support / Ko-fi block copy.
+- **`projects.ts`** — the curated project list. Each project has a title,
+  description, url, tags, and optional `year` / `language`.
+- **`skills.ts`** — tech-stack categories and their skills.
+- **`config.ts`** — site metadata (title, description, keywords, OpenGraph).
 
 ## 📦 Deployment
 
-This project is configured with **GitHub Actions** for automated deployment to GitHub Pages.
-
-1.  Push changes to the `main` branch.
-2.  The workflow `.github/workflows/deploy.yml` will trigger.
-3.  It builds the site (`npm run build`) and deploys the `out` directory to GitHub Pages.
-4.  The `CNAME` file ensures the custom domain `howar31.com` is preserved.
+Push to `main` — the `.github/workflows/deploy.yml` workflow builds the site and
+deploys the static export to GitHub Pages. `public/CNAME` preserves the custom
+domain.
 
 ## 📄 License
 
