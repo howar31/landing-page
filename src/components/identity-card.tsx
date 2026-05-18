@@ -43,6 +43,7 @@ export function IdentityCard() {
         className="w-[110px] h-[110px] feed:w-[132px] feed:h-[132px]"
         style={{
           position: "relative",
+          boxSizing: "content-box",
           borderRadius: "50%",
           padding: 3,
           background: `linear-gradient(135deg,${ACCENT2},${ACCENT})`,
@@ -53,6 +54,7 @@ export function IdentityCard() {
           src={identity.avatar}
           alt={identity.name}
           style={{
+            boxSizing: "content-box",
             width: "100%",
             height: "100%",
             borderRadius: "50%",
@@ -72,13 +74,14 @@ export function IdentityCard() {
             background: "rgb(2,6,23)",
             border: `2px solid ${ACCENT}`,
             color: ACCENT,
-            fontSize: 14,
+            fontSize: 18,
+            lineHeight: 1,
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          ♥
+          <span style={{ display: "block", transform: "translateY(-2px)" }}>♥</span>
         </span>
       </div>
 
