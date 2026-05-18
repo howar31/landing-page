@@ -34,8 +34,8 @@ backend and no authentication.
   icons are all derived from one shared portrait source.
 - **Data:** Static content lives in `src/data/`. Two parts are fetched live in
   the browser (no API keys, public endpoints):
-  - GitHub API (`api.github.com`) — public repo count and the most recently
-    pushed repos.
+  - GitHub API (`api.github.com`) — public repo count, the most recently
+    pushed repos, and each displayed repo's language composition.
   - The blog RSS feed (`blog.howar31.com/index.xml`) — recent posts and post
     count.
   Both go through `useRemoteData`, are cached in `localStorage` with a 30-minute
@@ -63,9 +63,9 @@ landing-page/
 │   │   ├── section-title.tsx   # Shared kicker + title + count
 │   │   ├── intro-letter.tsx    # "Hi there" introduction block
 │   │   ├── tech-stack.tsx      # Skill categories as a row list
-│   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip
+│   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip + language bar
 │   │   ├── project-row.tsx     # One curated project row
-│   │   ├── projects.tsx        # Projects section: feed + tag filter + list (exports ProjectGrid)
+│   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + tag filter + list (exports ProjectGrid)
 │   │   ├── writing.tsx         # Live recent blog posts
 │   │   ├── support-block.tsx   # Ko-fi + donate call-to-action
 │   │   └── site-footer.tsx     # Copyright line
@@ -75,7 +75,7 @@ landing-page/
 │   │   ├── projects.ts         # Curated project list (+ optional year/language)
 │   │   └── config.ts           # Site metadata / SEO
 │   └── lib/                    # Data layer + utilities (+ *.test.ts)
-│       ├── github.ts           # GitHub API fetch + parseRepos
+│       ├── github.ts           # GitHub API fetch + parseRepos/parseLanguages
 │       ├── blog-feed.ts        # Blog RSS fetch + parseBlogFeed
 │       ├── cache.ts            # localStorage cache with TTL
 │       ├── format-date.ts      # Absolute + relative date formatting
@@ -121,7 +121,9 @@ landing-page/
 - No backend, no CMS — content is edited in `src/data/` files and redeployed.
 - Live data (repo count, recent repos, blog posts) is fetched client-side; it is
   not present in the initial static HTML and is unauthenticated (GitHub's
-  60 req/hour/IP limit applies, mitigated by the localStorage cache).
+  60 req/hour/IP limit applies, mitigated by the localStorage cache). A fresh
+  load makes 5 GitHub calls: profile, the repo list, and one `/languages` call
+  per displayed repo.
 - `Project.imageUrl` is retained in the data but unused by the current
   row-based layout (vestigial from the previous card-grid design).
 - `Project.year` / `Project.language` are backfilled only for GitHub-hosted

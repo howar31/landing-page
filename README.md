@@ -34,7 +34,8 @@ A single static page built as a two-column "personal card":
 Two parts update themselves — fetched in the browser, no API keys, cached in
 `localStorage` for 30 minutes, with graceful fallback if a request fails:
 
-- **GitHub API** — public repo count and the most recently pushed repositories.
+- **GitHub API** — public repo count, the most recently pushed repositories, and
+  each one's language breakdown.
 - **Blog RSS** (`blog.howar31.com/index.xml`) — recent posts and post count.
 
 ## 🛠️ Getting Started

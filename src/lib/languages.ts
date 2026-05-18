@@ -12,6 +12,15 @@ const LANGUAGE_COLORS: Record<string, string> = {
   Java: "#fb923c",
   AutoHotkey: "#94a3b8",
   VimL: "#34d399",
+  Ruby: "#ef4444",
+  Rust: "#f97316",
+  C: "#7dd3fc",
+  "C++": "#f472b6",
+  "C#": "#86efac",
+  Kotlin: "#c084fc",
+  Swift: "#fdba74",
+  Dockerfile: "#38bdf8",
+  Vue: "#4ade80",
 };
 
 const FALLBACK = "#94a3b8";

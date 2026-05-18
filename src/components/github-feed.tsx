@@ -37,7 +37,7 @@ export function GithubFeed() {
               key={repo.name}
               className="flex items-start justify-between gap-3 py-2 border-b border-white/[0.06] last:border-b-0"
             >
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <div>
                   <a
                     href={repo.url}
@@ -53,7 +53,34 @@ export function GithubFeed() {
                     {repo.description}
                   </div>
                 )}
-                {repo.language && (
+                {repo.languages.length > 0 ? (
+                  <div className="mt-2">
+                    <div className="flex h-1.5 w-full max-w-[360px] overflow-hidden rounded-full">
+                      {repo.languages.map((lang) => (
+                        <span
+                          key={lang.name}
+                          title={`${lang.name} ${lang.pct}%`}
+                          style={{
+                            // flex-grow by pct so segments always partition
+                            // the full bar even when rounded pcts don't sum to 100
+                            flex: `${lang.pct} 0 0%`,
+                            background: languageColor(lang.name),
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <div className="mt-1.5 font-mono text-[11px]">
+                      {repo.languages.map((lang, i) => (
+                        <span key={lang.name}>
+                          {i > 0 && <span className="text-white/25"> · </span>}
+                          <span style={{ color: languageColor(lang.name) }}>
+                            {lang.name}
+                          </span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ) : repo.language ? (
                   <div className="mt-1 inline-flex items-center gap-1.5">
                     <span
                       className="w-2 h-2 rounded-full shrink-0"
@@ -66,7 +93,7 @@ export function GithubFeed() {
                       {repo.language}
                     </span>
                   </div>
-                )}
+                ) : null}
               </div>
               <div className="font-mono text-[11px] text-white/35 whitespace-nowrap pt-0.5 shrink-0">
                 {formatRelativeTime(repo.pushedAt)}
