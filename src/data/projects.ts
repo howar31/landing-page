@@ -6,8 +6,9 @@ export interface Project {
   url: string;
   tags: string[];
   imageUrl?: string;
-  year?: string;
   language?: string;
+  /** Optional override for the placeholder-tile monogram (image-less cards). */
+  monogram?: string;
 }
 
 export const projects: Project[] = [
@@ -18,7 +19,6 @@ export const projects: Project[] = [
     url: "https://github.com/howar31/landing-page",
     tags: ["Design", "Website"],
     imageUrl: "",
-    year: "2025",
     language: "TypeScript",
   },
   {
@@ -26,16 +26,14 @@ export const projects: Project[] = [
     description: "Traditional Chinese community website for Star Citizen.",
     url: "http://starcitizen.howar31.com/",
     tags: ["Community", "Game", "Website"],
-    imageUrl: "starcitizen.jpg",
+    imageUrl: "/starcitizen.jpg",
   },
   {
     title: "GW2 Timer",
     description: "Guild Wars 2 World Boss Event Timer.",
     url: "https://gw2timer.howar31.com/",
     tags: ["Game", "Tool", "Website"],
-    imageUrl:
-      "https://github.com/howar31/GW2Timer/raw/gh-pages/GW2Timer_Preview_en.png",
-    year: "2014",
+    imageUrl: "/gw2timer.png",
     language: "JavaScript",
   },
   {
@@ -43,8 +41,7 @@ export const projects: Project[] = [
     description: "Lottery tool for PTT (Taiwanese BBS).",
     url: "https://pttlottery.howar31.com/",
     tags: ["Tool", "Website"],
-    imageUrl: "https://github.com/howar31/PTTLottery/raw/gh-pages/preview.png",
-    year: "2014",
+    imageUrl: "/pttlottery.png",
     language: "JavaScript",
   },
   {
@@ -52,8 +49,7 @@ export const projects: Project[] = [
     description: "A pure JavaScript countdown timer.",
     url: "https://countdown.howar31.com/",
     tags: ["Tool", "Website"],
-    imageUrl: "https://github.com/howar31/countdown/raw/gh-pages/preview2.png",
-    year: "2015",
+    imageUrl: "/countdown.png",
     language: "JavaScript",
   },
   {
@@ -63,7 +59,6 @@ export const projects: Project[] = [
     url: "https://howar31.github.io/prank_credit_card_scan/",
     tags: ["Tool", "Website"],
     imageUrl: "",
-    year: "2019",
   },
   {
     title: "早餐計算機",
@@ -72,7 +67,6 @@ export const projects: Project[] = [
     url: "https://howar31.github.io/breakfast/",
     tags: ["Tool", "Website"],
     imageUrl: "",
-    year: "2017",
     language: "JavaScript",
   },
   {
@@ -80,9 +74,7 @@ export const projects: Project[] = [
     description: "Modern CSS3 theme for Plurk.",
     url: "https://github.com/howar31/NeoPlurkCSS3",
     tags: ["Design"],
-    imageUrl:
-      "https://camo.githubusercontent.com/234ab2d21c889aa2e587ded3510ed0b8505b9e5cca2c077f3f472cc44105599e/687474703a2f2f332e62702e626c6f6773706f742e636f6d2f2d30744471616f6251386e6b2f55555a57626657645a5f492f41414141414141414a35512f6c66766b6a4f772d4348592f73313630302f312e6e6f6c6f67696e2e706e67",
-    year: "2013",
+    imageUrl: "/neoplurkcss3.png",
     language: "CSS",
   },
   {
@@ -91,9 +83,7 @@ export const projects: Project[] = [
       "A lightweight Chrome extension for Twitch TV notification and popout.",
     url: "https://chrome.google.com/webstore/detail/eztwitch/pnapgjocmoacccjajhomkikgggcepobk/",
     tags: ["Tool"],
-    imageUrl:
-      "https://github.com/howar31/EzTwitch/blob/master/deploy/images/icon.png?raw=true",
-    year: "2016",
+    imageUrl: "/eztwitch.png",
     language: "JavaScript",
   },
   {
@@ -115,7 +105,7 @@ export const projects: Project[] = [
     description: "Digital literature museum for Zheng Chouyu.",
     url: "http://www.digitalpoetry-zcy.ntpu.edu.tw/",
     tags: ["Website"],
-    imageUrl: "digitalpoetry-zcy.jpg",
+    imageUrl: "/digitalpoetry-zcy.jpg",
   },
   {
     title: "Warhammer 40,000: Rogue Trader 繁體中文化",
@@ -123,26 +113,21 @@ export const projects: Project[] = [
       "Traditional Chinese localization project for Warhammer 40,000: Rogue Trader.",
     url: "https://github.com/howar31/WH4KRT-TradChinese",
     tags: ["Game", "Translation"],
-    imageUrl:
-      "https://github.com/howar31/WH4KRT-TradChinese/raw/main/screenshots/20241110231725_1.jpg",
-    year: "2024",
+    imageUrl: "/wh4krt.jpg",
   },
   {
     title: "Prison Architect 繁體中文化",
     description: "Traditional Chinese localization mod for Prison Architect.",
     url: "https://steamcommunity.com/sharedfiles/filedetails/?id=473471025",
     tags: ["Game", "Translation"],
-    imageUrl:
-      "https://images.steamusercontent.com/ugc/441732331243214089/AC1E70D832FC116B983627C30FEAF9D86D4467FC/?imw=268&imh=268&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true",
-    year: "2015",
+    imageUrl: "/prison-architect.jpg",
   },
   {
     title: "Banished 繁體中文化",
     description: "Traditional Chinese localization mod for Banished.",
     url: "https://steamcommunity.com/sharedfiles/filedetails/?id=338554849",
     tags: ["Game", "Translation"],
-    imageUrl:
-      "https://cdn.steamusercontent.com/ugc/38606361443126458/DAA04D6C5A22D5ABC8772972C77D6326D5E60FB9/?imw=268&imh=268&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true",
+    imageUrl: "/banished.jpg",
   },
   {
     title: "Trove Auto Fishing",
@@ -150,7 +135,6 @@ export const projects: Project[] = [
     url: "https://github.com/howar31/Trove-AHK-AutoFish",
     tags: ["Game", "Tool"],
     imageUrl: "",
-    year: "2015",
     language: "AutoHotkey",
   },
   {
@@ -170,7 +154,6 @@ export const projects: Project[] = [
   {
     title: "GW2 PTT Netizens 公會網站",
     description: "Guild website for GW2 PTT players.",
-    // url: "http://gw2.howar31.com/",
     url: "#",
     tags: ["Community", "Game"],
     imageUrl: "",
@@ -181,7 +164,6 @@ export const projects: Project[] = [
     url: "https://github.com/howar31/oh-my-zsh-powerline-theme",
     tags: ["Design", "Tool"],
     imageUrl: "",
-    year: "2013",
     language: "Shell",
   },
 ];

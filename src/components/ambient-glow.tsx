@@ -2,9 +2,9 @@ import type { CSSProperties } from "react";
 
 // Fixed glow color values derived from #8b5cf6 (r1,g1,b1) and #a855f7 (r2,g2,b2)
 // Mid-blend: r3=Math.round((139+168)/2)=153, g3=Math.round((92+85)/2)=88, b3=Math.round((246+247)/2)=246
-// intensity = 1.6
+// intensity = 0.27 — tuned so blob 1 peaks at ~0.15 alpha, matching howar31-blog's --glow-1
 
-const INTENSITY = 1.6;
+const INTENSITY = 0.27;
 
 const BLOB_BASE: CSSProperties = {
   position: "absolute",

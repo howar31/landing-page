@@ -62,10 +62,10 @@ landing-page/
 │   │   ├── identity-card.tsx   # Sticky left rail; live repo/post counts
 │   │   ├── section-title.tsx   # Shared kicker + title + count
 │   │   ├── intro-letter.tsx    # "Hi there" introduction block
-│   │   ├── tech-stack.tsx      # Skill categories as a row list
+│   │   ├── tech-stack.tsx      # Skill categories as stacked blocks
 │   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip + language bar
-│   │   ├── project-row.tsx     # One curated project row
-│   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + tag filter + list (exports ProjectGrid)
+│   │   ├── project-card.tsx    # One curated project — thumbnail card (screenshot or monogram tile)
+│   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + tag filter + 2-column card grid, View Transitions on filter (exports ProjectGrid)
 │   │   ├── writing.tsx         # Live recent blog posts
 │   │   ├── support-block.tsx   # Ko-fi + donate call-to-action
 │   │   ├── error-boundary.tsx  # Render-error boundary wrapping live-data sections
@@ -73,7 +73,7 @@ landing-page/
 │   ├── data/                   # Static content
 │   │   ├── identity.ts         # Identity, intro-letter, support copy
 │   │   ├── skills.ts           # Tech-stack categories (+ per-category color)
-│   │   ├── projects.ts         # Curated project list (+ optional year/language)
+│   │   ├── projects.ts         # Curated project list (+ optional imageUrl/language/monogram)
 │   │   └── config.ts           # Site metadata / SEO
 │   └── lib/                    # Data layer + utilities (+ *.test.ts)
 │       ├── github.ts           # GitHub API fetch + parseRepos/parseLanguages
@@ -81,6 +81,7 @@ landing-page/
 │       ├── cache.ts            # localStorage cache with TTL + schema version
 │       ├── format-date.ts      # Absolute + relative date formatting
 │       ├── languages.ts        # Language → color map
+│       ├── monogram.ts         # Derive a placeholder monogram for a project
 │       ├── use-remote-data.ts  # Client hook: loading/data/error
 │       └── utils.ts            # cn() class-merge helper
 ├── public/                     # CNAME, avatar, PWA manifest + icons, static images
@@ -104,7 +105,8 @@ landing-page/
 ## Verification
 
 - `npm test` — Vitest (jsdom) unit tests for the `src/lib/` pure functions
-  (language colors, date formatting, cache, RSS parsing, GitHub repo parsing).
+  (language colors, date formatting, cache, RSS parsing, GitHub repo parsing,
+  monogram derivation).
 - `npm run build` — must succeed and produce the static export in `out/`.
 - `npm run lint` — ESLint via `next lint`.
 - Manual: responsive check (two-column ≥ 880px, single column down to ~360px),
@@ -125,10 +127,10 @@ landing-page/
   60 req/hour/IP limit applies, mitigated by the localStorage cache). A fresh
   load makes 5 GitHub calls: profile, the repo list, and one `/languages` call
   per displayed repo.
-- `Project.imageUrl` is retained in the data but unused by the current
-  row-based layout (vestigial from the previous card-grid design).
-- `Project.year` / `Project.language` are backfilled only for GitHub-hosted
-  projects; non-GitHub projects leave them blank.
+- `Project.imageUrl` is a locally-hosted thumbnail when present; image-less
+  projects render a generated monogram tile instead.
+- `Project.language` is set only for projects whose language is known;
+  others leave it blank.
 
 ## Key Decisions
 
@@ -141,6 +143,13 @@ landing-page/
 - **Curated project list:** the portfolio is an editorial list in
   `src/data/projects.ts` (including non-GitHub work), not an automated repo
   dump; the live GitHub strip complements it rather than replacing it.
+- **Thumbnail-card grid with View Transitions:** the portfolio renders as a
+  2-column thumbnail-card grid. Projects without a local screenshot show a
+  monogram tile derived from the title (`src/lib/monogram.ts`), tinted by the
+  primary tag. The tag filter runs inside the native View Transitions API —
+  removed cards fade, survivors glide to their new slot — falling back to an
+  instant swap where the API is unavailable or `prefers-reduced-motion` is set;
+  no animation library is added.
 - **Versioned cache + error boundaries:** every cached payload is stamped with
   `CACHE_VERSION`; a deploy that changes a cached shape bumps it so stale
   entries are rejected instead of crashing the new code. Live-data sections are

@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { flushSync } from "react-dom";
 import { projects, moreProjects } from "@/data/projects";
 import { SectionTitle } from "@/components/section-title";
 import { GithubFeed } from "@/components/github-feed";
 import { ErrorBoundary } from "@/components/error-boundary";
-import { ProjectRow } from "@/components/project-row";
+import { ProjectCard } from "@/components/project-card";
 import { cn } from "@/lib/utils";
 
 export function ProjectGrid() {
@@ -26,8 +27,32 @@ export function ProjectGrid() {
     return projects.filter((project) => project.tags.includes(activeTag));
   }, [activeTag]);
 
+  // Stable view-transition-name per project, indexed off the full list, so a
+  // card that survives a filter change morphs from its old grid slot to the new.
+  const transitionNames = useMemo(() => {
+    const map = new Map<string, string>();
+    projects.forEach((project, i) => map.set(project.title, `project-card-${i}`));
+    return map;
+  }, []);
+
   function handleTagClick(tag: string) {
-    setActiveTag((current) => (current === tag ? null : tag));
+    const apply = () =>
+      setActiveTag((current) => (current === tag ? null : tag));
+
+    const doc = document as Document & {
+      startViewTransition?: (callback: () => void) => unknown;
+    };
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    // View Transitions: removed cards fade out, survivors glide to their new
+    // slot. flushSync commits React's update inside the transition callback.
+    if (doc.startViewTransition && !reduceMotion) {
+      doc.startViewTransition(() => flushSync(apply));
+    } else {
+      apply();
+    }
   }
 
   const MoreIcon = moreProjects.icon;
@@ -67,14 +92,17 @@ export function ProjectGrid() {
         ))}
       </div>
 
-      {/* Curated project list */}
-      <div className="mt-4 flex flex-col gap-2">
+      {/* Curated project grid — one column below 880px, two above.
+         Each card carries a stable view-transition-name; the tag filter runs
+         inside a View Transition so removed cards fade and survivors glide. */}
+      <div className="mt-4 grid grid-cols-1 feed:grid-cols-2 gap-3">
         {filteredProjects.map((project) => (
-          <ProjectRow
+          <div
             key={project.title}
-            project={project}
-            onTagClick={handleTagClick}
-          />
+            style={{ viewTransitionName: transitionNames.get(project.title) }}
+          >
+            <ProjectCard project={project} onTagClick={handleTagClick} />
+          </div>
         ))}
       </div>
 
