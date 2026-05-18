@@ -3,8 +3,7 @@ import { identity } from "@/data/identity";
 export function TopBar() {
   return (
     <header
-      style={{ maxWidth: 1180 }}
-      className="mx-auto px-5 feed:px-8 pt-5 feed:pt-7 flex items-center justify-between gap-3"
+      className="mx-auto max-w-[1180px] 2xl:max-w-[1320px] w1:max-w-[1480px] w2:max-w-[1620px] w3:max-w-[1760px] px-5 feed:px-8 pt-5 feed:pt-7 flex items-center justify-between gap-3"
     >
       {/* Wordmark */}
       <a

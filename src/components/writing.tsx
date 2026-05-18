@@ -48,7 +48,7 @@ export function Writing() {
                 {formatPostDate(post.date)}
               </div>
               {/* Body column */}
-              <div>
+              <div className="max-w-[680px]">
                 <div className="text-[16px] font-semibold tracking-[-0.01em]">
                   {post.title}
                 </div>

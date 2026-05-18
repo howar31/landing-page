@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, BookOpen, type LucideIcon } from "lucide-react";
+import { Github, BookOpen, MapPin, type LucideIcon } from "lucide-react";
 import { identity } from "@/data/identity";
 import { fetchProfileRepoCount } from "@/lib/github";
 import { fetchBlogPosts } from "@/lib/blog-feed";
@@ -129,8 +129,18 @@ export function IdentityCard() {
       >
         {identity.tagline}
         <br />
-        Lives in{" "}
-        <span style={{ color: "rgba(255,255,255,0.85)" }}>{identity.location}</span>
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 5,
+            marginTop: 4,
+            color: "rgba(255,255,255,0.85)",
+          }}
+        >
+          <MapPin size={13} style={{ opacity: 0.7, flexShrink: 0 }} aria-label="Location" />
+          {identity.location}
+        </span>
       </div>
 
       {/* Stats row */}

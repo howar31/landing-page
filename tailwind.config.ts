@@ -9,6 +9,9 @@ const config: Config = {
     extend: {
       screens: {
         feed: "880px",
+        w1: "1920px",
+        w2: "2400px",
+        w3: "3000px",
       },
       fontFamily: {
         sans: ["var(--font-noto-sans)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],

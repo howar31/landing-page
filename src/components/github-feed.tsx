@@ -38,16 +38,18 @@ export function GithubFeed() {
               className="flex items-start justify-between gap-3 py-2 border-b border-white/[0.06] last:border-b-0"
             >
               <div className="min-w-0">
-                <a
-                  href={repo.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[13px] font-semibold text-white/85 hover:text-white transition-colors no-underline"
-                >
-                  {repo.name}
-                </a>
+                <div>
+                  <a
+                    href={repo.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[13px] font-semibold text-white/85 hover:text-white transition-colors no-underline"
+                  >
+                    {repo.name}
+                  </a>
+                </div>
                 {repo.description && (
-                  <div className="mt-0.5 text-[12px] leading-[1.5] text-white/55 line-clamp-2">
+                  <div className="mt-0.5 max-w-[640px] text-[12px] leading-[1.5] text-white/55 line-clamp-2">
                     {repo.description}
                   </div>
                 )}

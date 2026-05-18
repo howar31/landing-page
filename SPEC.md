@@ -14,10 +14,14 @@ backend and no authentication.
   fully static export (`output: export` in `next.config.mjs`) — no server
   runtime; the build emits a static site to `out/`.
 - **Styling:** Tailwind CSS 3 with design tokens (CSS custom properties) and
-  `@keyframes` defined in `src/app/globals.css`. A custom `feed:` breakpoint
-  (880px) drives the responsive two-column ↔ single-column switch.
+  `@keyframes` defined in `src/app/globals.css`. Custom breakpoints — `feed`
+  (880px) for the two-column ↔ single-column switch, plus `w1`/`w2`/`w3`
+  (1920/2400/3000px) for large-display width stepping.
 - **Layout:** A two-column "personal card" layout — a sticky `IdentityCard`
   rail plus a scrolling content feed. Collapses to a single column below 880px.
+  The content max-width steps up from 1180px to 1760px across the large-display
+  breakpoints so the page scales to 4K without over-long text lines (prose
+  blocks carry their own narrower caps).
 - **Fonts:** Noto Sans TC and Atkinson Hyperlegible Next are self-hosted
   (`src/app/fonts/*.woff2`) via `next/font/local`; JetBrains Mono via
   `next/font/google`.
