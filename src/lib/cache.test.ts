@@ -25,4 +25,13 @@ describe("cache", () => {
     localStorage.setItem("lp-cache:k", "{not json");
     expect(readCache("k", 60000)).toBeNull();
   });
+
+  it("returns null when the entry's cache version does not match", () => {
+    // An entry written by an older deploy (pre-versioning) has no `v` field.
+    localStorage.setItem(
+      "lp-cache:k",
+      JSON.stringify({ ts: Date.now(), data: { n: 1 } }),
+    );
+    expect(readCache("k", 60000)).toBeNull();
+  });
 });

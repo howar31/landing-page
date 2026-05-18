@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { projects, moreProjects } from "@/data/projects";
 import { SectionTitle } from "@/components/section-title";
 import { GithubFeed } from "@/components/github-feed";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { ProjectRow } from "@/components/project-row";
 import { cn } from "@/lib/utils";
 
@@ -35,7 +36,9 @@ export function ProjectGrid() {
     <section className="py-10 feed:py-12 border-t border-white/[0.06]">
       <SectionTitle kicker="// works" title="Things I've made" count={projects.length} />
 
-      <GithubFeed />
+      <ErrorBoundary>
+        <GithubFeed />
+      </ErrorBoundary>
 
       {/* Featured work kicker */}
       <div className="mt-8 font-mono text-[11px] uppercase tracking-[0.14em] text-white/50">

@@ -5,6 +5,7 @@ import { IntroLetter } from "@/components/intro-letter";
 import { TechStack } from "@/components/tech-stack";
 import { ProjectGrid } from "@/components/projects";
 import { Writing } from "@/components/writing";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { SupportBlock } from "@/components/support-block";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -20,7 +21,9 @@ export default function Home() {
             <IntroLetter />
             <TechStack />
             <ProjectGrid />
-            <Writing />
+            <ErrorBoundary>
+              <Writing />
+            </ErrorBoundary>
             <SupportBlock />
             <SiteFooter />
           </div>

@@ -56,7 +56,7 @@ landing-page/
 │   │   ├── globals.css         # Design tokens (CSS vars) + keyframes
 │   │   ├── favicon.ico         # Browser favicon (Next.js app-dir convention)
 │   │   └── fonts/              # Self-hosted woff2 (Noto Sans TC, Atkinson)
-│   ├── components/             # 12 presentational/section components
+│   ├── components/             # 13 presentational/section components
 │   │   ├── ambient-glow.tsx    # Drifting purple radial-gradient background
 │   │   ├── top-bar.tsx         # Wordmark + status line
 │   │   ├── identity-card.tsx   # Sticky left rail; live repo/post counts
@@ -68,6 +68,7 @@ landing-page/
 │   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + tag filter + list (exports ProjectGrid)
 │   │   ├── writing.tsx         # Live recent blog posts
 │   │   ├── support-block.tsx   # Ko-fi + donate call-to-action
+│   │   ├── error-boundary.tsx  # Render-error boundary wrapping live-data sections
 │   │   └── site-footer.tsx     # Copyright line
 │   ├── data/                   # Static content
 │   │   ├── identity.ts         # Identity, intro-letter, support copy
@@ -77,7 +78,7 @@ landing-page/
 │   └── lib/                    # Data layer + utilities (+ *.test.ts)
 │       ├── github.ts           # GitHub API fetch + parseRepos/parseLanguages
 │       ├── blog-feed.ts        # Blog RSS fetch + parseBlogFeed
-│       ├── cache.ts            # localStorage cache with TTL
+│       ├── cache.ts            # localStorage cache with TTL + schema version
 │       ├── format-date.ts      # Absolute + relative date formatting
 │       ├── languages.ts        # Language → color map
 │       ├── use-remote-data.ts  # Client hook: loading/data/error
@@ -140,3 +141,8 @@ landing-page/
 - **Curated project list:** the portfolio is an editorial list in
   `src/data/projects.ts` (including non-GitHub work), not an automated repo
   dump; the live GitHub strip complements it rather than replacing it.
+- **Versioned cache + error boundaries:** every cached payload is stamped with
+  `CACHE_VERSION`; a deploy that changes a cached shape bumps it so stale
+  entries are rejected instead of crashing the new code. Live-data sections are
+  additionally wrapped in an error boundary so a render failure degrades that
+  section rather than blanking the page.
