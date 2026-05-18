@@ -22,13 +22,20 @@ export function TopBar() {
 
       {/* Status */}
       <div className="inline-flex items-center gap-2 font-mono text-xs text-white/55 min-w-0">
-        <span
-          className="w-[7px] h-[7px] rounded-full shrink-0"
-          style={{
-            background: "#34d399",
-            boxShadow: "0 0 8px rgba(52,211,153,0.7)",
-          }}
-        />
+        {/* Live status dot — a pinging ring behind a steady dot */}
+        <span className="relative inline-flex w-[7px] h-[7px] shrink-0">
+          <span
+            className="absolute inline-flex h-full w-full rounded-full opacity-60 animate-ping"
+            style={{ background: "#34d399" }}
+          />
+          <span
+            className="relative inline-flex h-[7px] w-[7px] rounded-full"
+            style={{
+              background: "#34d399",
+              boxShadow: "0 0 8px rgba(52,211,153,0.7)",
+            }}
+          />
+        </span>
         <span className="tracking-[0.02em] truncate">{identity.status}</span>
       </div>
     </header>

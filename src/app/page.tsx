@@ -19,13 +19,23 @@ export default function Home() {
           <IdentityCard />
           <div className="min-w-0">
             <IntroLetter />
-            <TechStack />
-            <ProjectGrid />
-            <ErrorBoundary>
-              <Writing />
-            </ErrorBoundary>
-            <SupportBlock />
-            <SiteFooter />
+            <div className="reveal">
+              <TechStack />
+            </div>
+            <div className="reveal">
+              <ProjectGrid />
+            </div>
+            <div className="reveal">
+              <ErrorBoundary>
+                <Writing />
+              </ErrorBoundary>
+            </div>
+            <div className="reveal">
+              <SupportBlock />
+            </div>
+            <div className="reveal">
+              <SiteFooter />
+            </div>
           </div>
         </main>
       </div>

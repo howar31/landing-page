@@ -1,10 +1,12 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { Github, BookOpen, MapPin, type LucideIcon } from "lucide-react";
 import { identity } from "@/data/identity";
 import { fetchProfileRepoCount } from "@/lib/github";
 import { fetchBlogPosts } from "@/lib/blog-feed";
 import { useRemoteData } from "@/lib/use-remote-data";
+import { useCountUp } from "@/lib/use-count-up";
 
 const ACCENT = "#a78bfa";
 const ACCENT2 = "#60a5fa";
@@ -21,10 +23,16 @@ export function IdentityCard() {
   const repoCount = useRemoteData(fetchProfileRepoCount);
   const posts = useRemoteData(fetchBlogPosts);
 
-  const repoDisplay =
-    repoCount.loading || repoCount.error ? "—" : String(repoCount.data ?? "—");
-  const postsDisplay =
-    posts.loading || posts.error ? "—" : String(posts.data?.length ?? "—");
+  // Count-up animates the live numbers from 0 once their data resolves.
+  const repoTarget =
+    repoCount.loading || repoCount.error ? null : repoCount.data ?? null;
+  const postsTarget =
+    posts.loading || posts.error ? null : posts.data?.length ?? null;
+  const repoValue = useCountUp(repoTarget);
+  const postsValue = useCountUp(postsTarget);
+
+  const repoDisplay = repoValue === null ? "—" : String(repoValue);
+  const postsDisplay = postsValue === null ? "—" : String(postsValue);
 
   return (
     <aside
@@ -41,14 +49,19 @@ export function IdentityCard() {
       {/* Avatar */}
       <div
         className="w-[110px] h-[110px] feed:w-[132px] feed:h-[132px]"
-        style={{
-          position: "relative",
-          boxSizing: "content-box",
-          borderRadius: "50%",
-          padding: 3,
-          background: `linear-gradient(135deg,${ACCENT2},${ACCENT})`,
-          boxShadow: `0 0 24px ${ACCENT}59`,
-        }}
+        style={
+          {
+            position: "relative",
+            boxSizing: "content-box",
+            borderRadius: "50%",
+            padding: 3,
+            background: `linear-gradient(135deg,${ACCENT2},${ACCENT})`,
+            boxShadow: `0 0 24px ${ACCENT}59`,
+            // Slow glow breath; the static boxShadow is the reduced-motion rest state.
+            "--avatar-glow": `${ACCENT}59`,
+            animation: "avatarGlow 5s ease-in-out infinite",
+          } as CSSProperties
+        }
       >
         <img
           src={identity.avatar}

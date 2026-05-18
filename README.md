@@ -15,7 +15,8 @@ A single static page built as a two-column "personal card":
   portfolio with a live "Latest on GitHub" strip and tag filtering, recent blog
   posts, and a support call-to-action.
 - **Responsive** — two columns on wide screens, a single column on phones.
-- **Ambient design** — drifting purple radial glow; animations respect
+- **Ambient design** — a dim drifting glow, breathing accent dots, a count-up
+  on the live stats, and sections that reveal on scroll; all motion respects
   `prefers-reduced-motion`.
 - **Installable** — ships a web app manifest and a full icon set (favicon,
   apple-touch-icon, PWA icons), installable as a Progressive Web App.

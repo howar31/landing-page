@@ -1,10 +1,9 @@
 interface SectionTitleProps {
   kicker: string;
   title: string;
-  count?: number;
 }
 
-export function SectionTitle({ kicker, title, count }: SectionTitleProps) {
+export function SectionTitle({ kicker, title }: SectionTitleProps) {
   return (
     <div className="mb-[22px]">
       {/* Kicker row */}
@@ -20,11 +19,6 @@ export function SectionTitle({ kicker, title, count }: SectionTitleProps) {
         <h2 className="m-0 text-[22px] feed:text-[26px] font-semibold tracking-[-0.02em] text-white">
           {title}
         </h2>
-        {count != null ? (
-          <span className="font-mono text-xs text-white/35">
-            {String(count).padStart(2, "0")}
-          </span>
-        ) : null}
       </div>
     </div>
   );

@@ -17,6 +17,11 @@ backend and no authentication.
   `@keyframes` defined in `src/app/globals.css`. Custom breakpoints — `feed`
   (880px) for the two-column ↔ single-column switch, plus `w1`/`w2`/`w3`
   (1920/2400/3000px) for large-display width stepping.
+- **Motion:** the ambient glow, breathing accent dots, and avatar glow are CSS
+  `@keyframes`; sections reveal on scroll via a CSS scroll-driven timeline
+  (`animation-timeline: view()`, no JS); live stat numbers count up via the
+  `useCountUp` hook. A global `prefers-reduced-motion` rule in `globals.css`
+  disables every animation and transition at once.
 - **Layout:** A two-column "personal card" layout — a sticky `IdentityCard`
   rail plus a scrolling content feed. Collapses to a single column below 880px.
   The content max-width steps up from 1180px to 1760px across the large-display
@@ -60,7 +65,7 @@ landing-page/
 │   │   ├── ambient-glow.tsx    # Drifting purple radial-gradient background
 │   │   ├── top-bar.tsx         # Wordmark + status line
 │   │   ├── identity-card.tsx   # Sticky left rail; live repo/post counts
-│   │   ├── section-title.tsx   # Shared kicker + title + count
+│   │   ├── section-title.tsx   # Shared kicker + title
 │   │   ├── intro-letter.tsx    # "Hi there" introduction block
 │   │   ├── tech-stack.tsx      # Skill categories as stacked blocks
 │   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip + language bar
@@ -82,6 +87,7 @@ landing-page/
 │       ├── format-date.ts      # Absolute + relative date formatting
 │       ├── languages.ts        # Language → color map
 │       ├── monogram.ts         # Derive a placeholder monogram for a project
+│       ├── use-count-up.ts     # Client hook: animate a number from 0 to target
 │       ├── use-remote-data.ts  # Client hook: loading/data/error
 │       └── utils.ts            # cn() class-merge helper
 ├── public/                     # CNAME, avatar, PWA manifest + icons, static images
@@ -150,6 +156,12 @@ landing-page/
   removed cards fade, survivors glide to their new slot — falling back to an
   instant swap where the API is unavailable or `prefers-reduced-motion` is set;
   no animation library is added.
+- **CSS-first motion, reduced-motion-gated:** all animation is CSS — `@keyframes`
+  for the ambient glow and breathing accents, and a scroll-driven timeline
+  (`animation-timeline: view()`) for the section reveal, chosen over a JS
+  IntersectionObserver so a section can never be left invisible if scripts fail
+  (on browsers without timeline support the reveal collapses to simply-visible).
+  A single global `prefers-reduced-motion` rule disables all of it.
 - **Versioned cache + error boundaries:** every cached payload is stamped with
   `CACHE_VERSION`; a deploy that changes a cached shape bumps it so stale
   entries are rejected instead of crashing the new code. Live-data sections are

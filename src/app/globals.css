@@ -57,6 +57,18 @@ body {
 @keyframes glowScan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
 @keyframes wave { 0%,60%,100% { transform: rotate(0deg); } 10%,30% { transform: rotate(14deg); } 20% { transform: rotate(-8deg); } 40%,50% { transform: rotate(10deg); } }
 @keyframes meter { 0%,100% { transform: scaleY(0.5); } 50% { transform: scaleY(1); } }
+@keyframes dotBreath { 0%,100% { box-shadow: 0 0 3px var(--dot-c); transform: scale(1); } 50% { box-shadow: 0 0 11px var(--dot-c), 0 0 18px var(--dot-c); transform: scale(1.32); } }
+@keyframes avatarGlow { 0%,100% { box-shadow: 0 0 16px var(--avatar-glow); } 50% { box-shadow: 0 0 38px var(--avatar-glow); } }
+@keyframes revealRise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Scroll-driven section reveal — pure CSS, no JS. Where view() timelines are
+   unsupported the animation collapses to its end state (content simply shows),
+   so a section can never be stuck invisible. Disabled under reduced-motion. */
+.reveal {
+  animation: revealRise both linear;
+  animation-timeline: view();
+  animation-range: entry 4% cover 26%;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

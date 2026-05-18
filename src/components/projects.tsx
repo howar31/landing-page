@@ -59,7 +59,7 @@ export function ProjectGrid() {
 
   return (
     <section className="py-10 feed:py-12 border-t border-white/[0.06]">
-      <SectionTitle kicker="// works" title="Things I've made" count={projects.length} />
+      <SectionTitle kicker="// works" title="Things I've made" />
 
       <ErrorBoundary>
         <GithubFeed />
