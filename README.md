@@ -17,6 +17,8 @@ A single static page built as a two-column "personal card":
 - **Responsive** — two columns on wide screens, a single column on phones.
 - **Ambient design** — drifting purple radial glow; animations respect
   `prefers-reduced-motion`.
+- **Installable** — ships a web app manifest and a full icon set (favicon,
+  apple-touch-icon, PWA icons), installable as a Progressive Web App.
 
 ## 🚀 Tech Stack
 

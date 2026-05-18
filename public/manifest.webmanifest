@@ -1,0 +1,13 @@
+{
+  "name": "Howar31 - Web Developer",
+  "short_name": "Howar31",
+  "description": "Howar31, a passionate web developer and open source enthusiast with deep roots in backend engineering and cloud infrastructure.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

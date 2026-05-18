@@ -22,5 +22,7 @@ export const siteConfig = {
   },
   icons: {
     icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
+  manifest: "/manifest.webmanifest",
 };

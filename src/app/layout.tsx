@@ -29,6 +29,7 @@ export const metadata: Metadata = {
   authors: siteConfig.authors,
   openGraph: siteConfig.openGraph,
   icons: siteConfig.icons,
+  manifest: siteConfig.manifest,
 };
 
 export default function RootLayout({
