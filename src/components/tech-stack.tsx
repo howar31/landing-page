@@ -14,7 +14,7 @@ const DOT_BREATH = [
 
 export function TechStack() {
   return (
-    <section className="py-10 feed:py-12 border-t border-white/[0.06]">
+    <section className="py-7 feed:py-8 border-t border-white/[0.06]">
       <SectionTitle kicker="// stack" title="What I build with" />
 
       <ul
@@ -23,11 +23,19 @@ export function TechStack() {
       >
         {skillCategories.map((category, index) => {
           const breath = DOT_BREATH[index % DOT_BREATH.length];
+          // Skip the closing border on the last row: the next section's
+          // border-t already divides the sections, and a closing line here
+          // would frame the inter-section gap as an empty box.
+          const isLast = index === skillCategories.length - 1;
           return (
             <li
               key={category.title}
               className="py-4"
-              style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+              style={
+                isLast
+                  ? undefined
+                  : { borderBottom: "1px solid rgba(255,255,255,0.06)" }
+              }
             >
               {/* Header line: dot + category label */}
               <div className="flex items-center gap-2.5">

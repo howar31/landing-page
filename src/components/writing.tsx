@@ -9,7 +9,7 @@ export function Writing() {
   const { data, loading, error } = useRemoteData(fetchBlogPosts);
 
   return (
-    <section className="py-10 feed:py-12 border-t border-white/[0.06]">
+    <section className="py-7 feed:py-8 border-t border-white/[0.06]">
       <SectionTitle kicker="// writing" title="From the blog" />
 
       {/* Post list area */}
