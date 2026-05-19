@@ -77,7 +77,11 @@ export function ProjectCard({ project, onTagClick }: ProjectCardProps) {
           </span>
         )}
       </div>
-      <div className="mt-1 text-[13.5px] leading-[1.5] text-white/65 line-clamp-2">
+      {/* line-clamp-2 truncates; title exposes the full text on hover. */}
+      <div
+        title={project.description}
+        className="mt-1 text-[13.5px] leading-[1.5] text-white/65 line-clamp-2"
+      >
         {project.description}
       </div>
       {project.tags.length > 0 && (

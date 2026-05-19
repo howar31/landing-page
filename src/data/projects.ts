@@ -15,7 +15,7 @@ export const projects: Project[] = [
   {
     title: "Scrum Poker",
     description:
-      "Serverless, database-free peer-to-peer Scrum Poker running entirely in the browser, with zero-split-brain host migration over WebRTC.",
+      "Serverless, peer-to-peer Scrum Poker that runs entirely in the browser over WebRTC.",
     url: "https://lab.howar31.com/scrum-poker/",
     tags: ["Web App", "Dev Tools"],
     imageUrl: "/scrum-poker.png",
@@ -32,7 +32,7 @@ export const projects: Project[] = [
   {
     title: "Hype Sign",
     description:
-      "An offline-capable PWA light board / LED sign with multi-color gradients and a marquee mode.",
+      "An offline LED-sign PWA with multi-color gradients and a marquee mode.",
     url: "https://lab.howar31.com/hype-sign/",
     tags: ["Web App"],
     imageUrl: "/hype-sign.png",
@@ -41,7 +41,7 @@ export const projects: Project[] = [
   {
     title: "MAGI Workflow",
     description:
-      "A multi-model workflow plugin for Claude Code, featuring MAGI-style weighted voting and cross-CLI orchestration.",
+      "A multi-model workflow plugin for Claude Code with MAGI-style weighted voting.",
     url: "https://github.com/howar31/magi-workflow",
     tags: ["AI", "Claude", "Dev Tools", "CLI"],
     imageUrl: "",
@@ -58,7 +58,7 @@ export const projects: Project[] = [
   {
     title: "Claude Memory",
     description:
-      "A cross-directory memory index and /memorize skill for Claude Code's built-in auto-memory.",
+      "A cross-directory memory index and /memorize skill for Claude Code's auto-memory.",
     url: "https://github.com/howar31/claude-memory",
     tags: ["AI", "Claude", "Dev Tools", "CLI"],
     imageUrl: "",
@@ -67,7 +67,7 @@ export const projects: Project[] = [
   {
     title: "Claude Backup",
     description:
-      "A three-layer backup system for a Claude Code config tree, running as background launchd jobs on macOS.",
+      "Three-layer backup for a Claude Code config tree, run as background macOS jobs.",
     url: "https://github.com/howar31/claude-backup",
     tags: ["AI", "Claude", "Dev Tools", "CLI"],
     imageUrl: "",
@@ -76,7 +76,7 @@ export const projects: Project[] = [
   {
     title: "Monokai Color Scheme",
     description:
-      "A faithful Monokai color scheme with proper ANSI terminal mapping for Ghostty, Neovim, and Vim.",
+      "A faithful Monokai color scheme for Ghostty, Neovim, and Vim.",
     url: "https://github.com/howar31/monokai-sublimetext",
     tags: ["Design", "Dev Tools"],
     imageUrl: "",
