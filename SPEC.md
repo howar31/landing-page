@@ -18,12 +18,11 @@ backend and no authentication.
   (880px) for the two-column ↔ single-column switch, plus `w1`/`w2`/`w3`
   (1920/2400/3000px) for large-display width stepping.
 - **Motion:** the ambient glow, breathing accent dots, and avatar glow are CSS
-  `@keyframes`; sections reveal on scroll via a CSS scroll-driven timeline
-  (`animation-timeline: view()`, no JS); live stat numbers count up via the
-  `useCountUp` hook (the "Since" stat counts *down* from the current year to
-  the founding year; all roll in over a 3s ease-out-quint deceleration). A
-  global `prefers-reduced-motion` rule in `globals.css`
-  disables every animation and transition at once.
+  `@keyframes`; live stat numbers count up via the `useCountUp` hook (the
+  "Since" stat counts *down* from the current year to the founding year; all
+  roll in over a 3s ease-out-quint deceleration). A global
+  `prefers-reduced-motion` rule in `globals.css` disables every animation and
+  transition at once.
 - **Layout:** A two-column "personal card" layout — a sticky `IdentityCard`
   rail plus a scrolling content feed. Collapses to a single column below 880px.
   The content max-width steps up from 1180px to 1760px across the large-display
@@ -165,12 +164,11 @@ landing-page/
   cards as descriptors without becoming pills. The filter logic accepts any tag,
   so clicking a non-pill tag on a card still filters; only the pill bar is
   restricted.
-- **CSS-first motion, reduced-motion-gated:** all animation is CSS — `@keyframes`
-  for the ambient glow and breathing accents, and a scroll-driven timeline
-  (`animation-timeline: view()`) for the section reveal, chosen over a JS
-  IntersectionObserver so a section can never be left invisible if scripts fail
-  (on browsers without timeline support the reveal collapses to simply-visible).
-  A single global `prefers-reduced-motion` rule disables all of it.
+- **CSS-first motion, reduced-motion-gated:** all animation is CSS `@keyframes`
+  for the ambient glow and breathing accents. A single global
+  `prefers-reduced-motion` rule disables all of it. An earlier scroll-driven
+  section reveal (`animation-timeline: view()`) was removed in favor of sections
+  showing immediately — keeping the page free of scroll-tied entrance motion.
 - **Versioned cache + error boundaries:** every cached payload is stamped with
   `CACHE_VERSION`; a deploy that changes a cached shape bumps it so stale
   entries are rejected instead of crashing the new code. Live-data sections are
