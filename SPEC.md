@@ -20,7 +20,9 @@ backend and no authentication.
 - **Motion:** the ambient glow, breathing accent dots, and avatar glow are CSS
   `@keyframes`; sections reveal on scroll via a CSS scroll-driven timeline
   (`animation-timeline: view()`, no JS); live stat numbers count up via the
-  `useCountUp` hook. A global `prefers-reduced-motion` rule in `globals.css`
+  `useCountUp` hook (the "Since" stat counts *down* from the current year to
+  the founding year; all roll in over a 3s ease-out-quint deceleration). A
+  global `prefers-reduced-motion` rule in `globals.css`
   disables every animation and transition at once.
 - **Layout:** A two-column "personal card" layout — a sticky `IdentityCard`
   rail plus a scrolling content feed. Collapses to a single column below 880px.
@@ -87,7 +89,7 @@ landing-page/
 │       ├── format-date.ts      # Absolute + relative date formatting
 │       ├── languages.ts        # Language → color map
 │       ├── monogram.ts         # Derive a placeholder monogram for a project
-│       ├── use-count-up.ts     # Client hook: animate a number from 0 to target
+│       ├── use-count-up.ts     # Client hook: animate a number from `from` to target (up or down)
 │       ├── use-remote-data.ts  # Client hook: loading/data/error
 │       └── utils.ts            # cn() class-merge helper
 ├── public/                     # CNAME, avatar, PWA manifest + icons, static images

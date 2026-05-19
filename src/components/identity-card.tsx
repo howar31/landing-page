@@ -31,8 +31,14 @@ export function IdentityCard() {
   const repoValue = useCountUp(repoTarget);
   const postsValue = useCountUp(postsTarget);
 
+  // "Since" counts down from the current year to the founding year.
+  const sinceValue = useCountUp(Number(identity.since), {
+    from: new Date().getFullYear(),
+  });
+
   const repoDisplay = repoValue === null ? "—" : String(repoValue);
   const postsDisplay = postsValue === null ? "—" : String(postsValue);
+  const sinceDisplay = sinceValue === null ? "—" : String(sinceValue);
 
   return (
     <aside
@@ -172,7 +178,7 @@ export function IdentityCard() {
         }}
       >
         {[
-          { label: "Since", value: identity.since },
+          { label: "Since", value: sinceDisplay },
           { label: "Repos", value: repoDisplay },
           { label: "Posts", value: postsDisplay },
         ].map(({ label, value }) => (

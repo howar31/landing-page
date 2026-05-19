@@ -47,8 +47,9 @@ export function TechStack() {
                   style={
                     {
                       background: category.color,
-                      boxShadow: `0 0 10px ${category.color}99`,
-                      "--dot-c": category.color,
+                      boxShadow: `0 0 8px ${category.color}66`,
+                      // Alpha-dimmed glow colour; the keyframe breathes this.
+                      "--dot-glow": `${category.color}66`,
                       animation: `dotBreath ${breath.duration} ease-in-out ${breath.delay} infinite`,
                     } as CSSProperties
                   }
