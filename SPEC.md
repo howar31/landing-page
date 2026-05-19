@@ -70,7 +70,7 @@ landing-page/
 │   │   ├── tech-stack.tsx      # Skill categories as stacked blocks
 │   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip + language bar
 │   │   ├── project-card.tsx    # One curated project — thumbnail card (screenshot or monogram tile)
-│   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + tag filter + 2-column card grid, View Transitions on filter (exports ProjectGrid)
+│   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + curated tag-pill filter + 2-column card grid, View Transitions on filter (exports ProjectGrid)
 │   │   ├── writing.tsx         # Live recent blog posts
 │   │   ├── support-block.tsx   # Ko-fi + donate call-to-action
 │   │   ├── error-boundary.tsx  # Render-error boundary wrapping live-data sections
@@ -152,10 +152,17 @@ landing-page/
 - **Thumbnail-card grid with View Transitions:** the portfolio renders as a
   2-column thumbnail-card grid. Projects without a local screenshot show a
   monogram tile derived from the title (`src/lib/monogram.ts`), tinted by the
-  primary tag. The tag filter runs inside the native View Transitions API —
-  removed cards fade, survivors glide to their new slot — falling back to an
-  instant swap where the API is unavailable or `prefers-reduced-motion` is set;
-  no animation library is added.
+  primary tag (`TAG_COLOR` map in `project-card.tsx`). The tag filter runs
+  inside the native View Transitions API — removed cards fade, survivors glide
+  to their new slot — falling back to an instant swap where the API is
+  unavailable or `prefers-reduced-motion` is set; no animation library is added.
+- **Filter pills decoupled from the tag set:** a project's `tags` are free-form
+  descriptive labels (hashtag model) and every tag is clickable. The filter bar,
+  however, shows only a curated subset — `PRIMARY_TAGS` in `projects.tsx` — so
+  high-coverage or low-signal tags (e.g. `Website`, `Community`, `CLI`) stay on
+  cards as descriptors without becoming pills. The filter logic accepts any tag,
+  so clicking a non-pill tag on a card still filters; only the pill bar is
+  restricted.
 - **CSS-first motion, reduced-motion-gated:** all animation is CSS — `@keyframes`
   for the ambient glow and breathing accents, and a scroll-driven timeline
   (`animation-timeline: view()`) for the section reveal, chosen over a JS

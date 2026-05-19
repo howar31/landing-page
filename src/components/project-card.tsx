@@ -14,12 +14,17 @@ interface ProjectCardProps {
 
 // Primary-tag → accent color for the monogram-tile gradient.
 const TAG_COLOR: Record<string, string> = {
+  AI: "#f59e0b",
+  Claude: "#d97757",
+  "Dev Tools": "#818cf8",
+  "Web App": "#38bdf8",
+  Gaming: "#34d399",
+  Localization: "#22d3ee",
   Design: "#a78bfa",
+  "Client Work": "#fb923c",
   Website: "#60a5fa",
   Community: "#f472b6",
-  Game: "#34d399",
-  Tool: "#f59e0b",
-  Translation: "#22d3ee",
+  CLI: "#94a3b8",
 };
 const DEFAULT_TAG_COLOR = "#a78bfa";
 

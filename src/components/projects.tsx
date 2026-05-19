@@ -9,17 +9,23 @@ import { ErrorBoundary } from "@/components/error-boundary";
 import { ProjectCard } from "@/components/project-card";
 import { cn } from "@/lib/utils";
 
+// Curated filter pills, in narrative order. The filter bar is decoupled from
+// the full tag vocabulary: descriptive tags (Website, Community, CLI) stay on
+// cards but are intentionally kept out of the pills. Any tag — pill or not —
+// still filters when clicked from a card.
+const PRIMARY_TAGS = [
+  "AI",
+  "Claude",
+  "Dev Tools",
+  "Web App",
+  "Gaming",
+  "Localization",
+  "Design",
+  "Client Work",
+];
+
 export function ProjectGrid() {
   const [activeTag, setActiveTag] = useState<string | null>(null);
-
-  // Derive sorted unique tag set from all projects
-  const allTags = useMemo(() => {
-    const tags = new Set<string>();
-    projects.forEach((project) => {
-      project.tags.forEach((tag) => tags.add(tag));
-    });
-    return Array.from(tags).sort();
-  }, []);
 
   // Filter projects by active tag; show all when null
   const filteredProjects = useMemo(() => {
@@ -72,7 +78,7 @@ export function ProjectGrid() {
 
       {/* Tag filter pills */}
       <div className="mt-3 flex flex-wrap gap-2">
-        {allTags.map((tag) => (
+        {PRIMARY_TAGS.map((tag) => (
           <button
             key={tag}
             type="button"

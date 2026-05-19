@@ -57,7 +57,9 @@ Content is data-driven — edit the files in `src/data/`:
   copy, social links, and the support / Ko-fi block copy.
 - **`projects.ts`** — the curated project list. Each project has a title,
   description, url, tags, and optional `imageUrl` / `language` / `monogram`
-  (the monogram overrides the auto-derived placeholder-tile initials).
+  (the monogram overrides the auto-derived placeholder-tile initials). Tags are
+  free-form and every tag is clickable; the filter-bar pills show only a
+  curated subset, defined as `PRIMARY_TAGS` in `src/components/projects.tsx`.
 - **`skills.ts`** — tech-stack categories and their skills.
 - **`config.ts`** — site metadata (title, description, keywords, OpenGraph).
 
