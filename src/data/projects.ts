@@ -23,7 +23,8 @@ export const projects: Project[] = [
   },
   {
     title: "Codec Craft",
-    description: "In-browser WebM to GIF converter powered by ffmpeg.wasm.",
+    description:
+      "In-browser codec workbench for WebM, GIF, and APNG cross-conversion — runs fully offline via ffmpeg.wasm.",
     url: "https://lab.howar31.com/codecraft/",
     tags: ["Web App"],
     imageUrl: "/codecraft.png",
