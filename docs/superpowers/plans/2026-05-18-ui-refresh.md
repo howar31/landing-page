@@ -381,7 +381,7 @@ export const projects: Project[] = [
 ];
 
 export const moreProjects = {
-  text: "More on GitHub",
+  text: "more on GitHub",
   url: "https://github.com/howar31",
   icon: Github,
 };

@@ -33,7 +33,7 @@ animations, or scanline.
 `src/components/projects.tsx` (`ProjectGrid`): the curated project list changes
 from `flex flex-col gap-2` to a responsive grid — one column below the existing
 `feed` breakpoint (880px), two columns above it
-(`grid-cols-1 feed:grid-cols-2 gap-3`). The empty-state and "More on GitHub"
+(`grid-cols-1 feed:grid-cols-2 gap-3`). The empty-state and "more on GitHub"
 link are unchanged. The tag filter still drives `filteredProjects`.
 
 ### Card component

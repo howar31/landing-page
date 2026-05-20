@@ -1,5 +1,6 @@
 "use client";
 
+import { BookOpen } from "lucide-react";
 import { fetchBlogPosts } from "@/lib/blog-feed";
 import { useRemoteData } from "@/lib/use-remote-data";
 import { formatPostDate } from "@/lib/format-date";
@@ -67,9 +68,10 @@ export function Writing() {
           href="https://blog.howar31.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-mono text-[13px] text-white/50 hover:text-white/85 transition-colors"
+          className="inline-flex items-center gap-1.5 font-mono text-[13px] text-white/50 hover:text-white/85 transition-colors"
         >
-          read all posts ↗
+          read all posts
+          <BookOpen className="w-3.5 h-3.5" />
         </a>
       </div>
     </section>
