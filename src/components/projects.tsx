@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { flushSync } from "react-dom";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "@/components/icons";
 import { projects, moreProjects } from "@/data/projects";
 import { SectionTitle } from "@/components/section-title";
 import { GithubFeed } from "@/components/github-feed";

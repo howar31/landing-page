@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { Lock } from "lucide-react";
+import { Lock } from "@/components/icons";
 import { type Project } from "@/data/projects";
 import { languageColor } from "@/lib/languages";
 import { deriveMonogram } from "@/lib/monogram";
@@ -34,7 +33,6 @@ const hasImage = (project: Project): boolean =>
   typeof project.imageUrl === "string" && project.imageUrl.trim() !== "";
 
 export function ProjectCard({ project, onTagClick }: ProjectCardProps) {
-  const [hover, setHover] = useState(false);
   const langColor = languageColor(project.language);
   const tileColor = TAG_COLOR[project.tags[0]] ?? DEFAULT_TAG_COLOR;
 
@@ -112,13 +110,7 @@ export function ProjectCard({ project, onTagClick }: ProjectCardProps) {
 
   if (isPrivate(project.url)) {
     return (
-      <div
-        className={cardClass}
-        style={{
-          background: "transparent",
-          borderColor: "rgba(255,255,255,0.06)",
-        }}
-      >
+      <div className={cn(cardClass, "bg-transparent border-white/[0.06]")}>
         {tile}
         {body}
         <div
@@ -136,20 +128,16 @@ export function ProjectCard({ project, onTagClick }: ProjectCardProps) {
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      className={cn(cardClass, "no-underline")}
-      style={{
-        background: hover ? "rgba(15,23,42,0.7)" : "transparent",
-        borderColor: hover ? "rgba(96,165,250,0.28)" : "rgba(255,255,255,0.06)",
-      }}
+      className={cn(
+        cardClass,
+        "group no-underline",
+        "bg-transparent border-white/[0.06]",
+        "hover:bg-[rgba(15,23,42,0.7)] hover:border-[rgba(96,165,250,0.28)]",
+      )}
     >
       {tile}
       {body}
-      <div
-        className="absolute top-[13px] right-[13px] text-[#a78bfa]/70 text-[16px] transition-transform duration-200 ease-[ease]"
-        style={{ transform: hover ? "translateX(3px)" : "none" }}
-      >
+      <div className="absolute top-[13px] right-[13px] text-[#a78bfa]/70 text-[16px] transition-transform duration-200 ease-[ease] group-hover:translate-x-[3px]">
         ↗
       </div>
     </a>

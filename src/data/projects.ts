@@ -1,4 +1,4 @@
-import { Github } from "lucide-react";
+import { Github } from "@/components/icons";
 
 export interface Project {
   title: string;

@@ -3,7 +3,10 @@ import { cn } from "@/lib/utils";
 
 export function SupportBlock() {
   return (
-    <section className="py-7 feed:py-8 border-t border-white/[0.06]">
+    <section
+      className="py-7 feed:py-8 border-t border-white/[0.06] cv-defer"
+      style={{ containIntrinsicSize: "auto 280px" }}
+    >
       <div
         className={cn(
           "p-5 feed:p-[26px] rounded-2xl border",

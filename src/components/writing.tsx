@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen } from "lucide-react";
+import { BookOpen } from "@/components/icons";
 import { fetchBlogPosts } from "@/lib/blog-feed";
 import { useRemoteData } from "@/lib/use-remote-data";
 import { formatPostDate } from "@/lib/format-date";
@@ -10,7 +10,10 @@ export function Writing() {
   const { data, loading, error } = useRemoteData(fetchBlogPosts);
 
   return (
-    <section className="py-7 feed:py-8 border-t border-white/[0.06]">
+    <section
+      className="py-7 feed:py-8 border-t border-white/[0.06] cv-defer"
+      style={{ containIntrinsicSize: "auto 540px" }}
+    >
       <SectionTitle kicker="// writing" title="From the blog" />
 
       {/* Post list area */}

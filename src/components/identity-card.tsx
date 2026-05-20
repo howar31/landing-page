@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { Github, BookOpen, MapPin, type LucideIcon } from "lucide-react";
+import { Github, BookOpen, MapPin, type IconComponent } from "@/components/icons";
 import { identity } from "@/data/identity";
 import { fetchProfileRepoCount } from "@/lib/github";
 import { fetchBlogPosts } from "@/lib/blog-feed";
@@ -14,7 +14,7 @@ const ACCENT2 = "#60a5fa";
 const BAR_HEIGHTS = [8, 14, 6, 12, 10];
 const BAR_DELAYS = ["0s", "0.15s", "0.3s", "0.45s", "0.6s"];
 
-const SOCIAL_ICONS: Record<string, LucideIcon> = {
+const SOCIAL_ICONS: Record<string, IconComponent> = {
   GitHub: Github,
   Blog: BookOpen,
 };

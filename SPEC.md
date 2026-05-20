@@ -77,21 +77,22 @@ landing-page/
 │   │   ├── page.tsx            # Page composition (two-column grid)
 │   │   ├── globals.css         # Design tokens (CSS vars) + keyframes
 │   │   ├── favicon.ico         # Browser favicon (Next.js app-dir convention)
-│   │   └── fonts/              # Self-hosted woff2 (Noto Sans TC, Atkinson)
-│   ├── components/             # 13 presentational/section components
+│   │   └── fonts/              # Self-hosted woff2 (Atkinson Hyperlegible Next only)
+│   ├── components/             # 14 presentational/section components + an icons module
 │   │   ├── ambient-glow.tsx    # Drifting purple radial-gradient background
 │   │   ├── top-bar.tsx         # Wordmark + status line
 │   │   ├── identity-card.tsx   # Sticky left rail; live repo/post counts
 │   │   ├── section-title.tsx   # Shared kicker + title
+│   │   ├── icons.tsx           # Inline SVG icon components (paths from lucide-react v0.460.0); replaces the runtime lucide-react dependency
 │   │   ├── intro-letter.tsx    # "Hi there" introduction block, wrapped in a CRT-monitor bezel (screen recess + brand label + green power LED); CRT scanline/flicker/phosphor treatment + trailing blinking cursor
 │   │   ├── tech-stack.tsx      # Skill categories as stacked blocks; no top border because the CRT bezel above provides visual closure
 │   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip — whole-row anchor, per-segment language-bar glow on hover, stale-cache indicator
-│   │   ├── project-card.tsx    # One curated project — thumbnail card (screenshot or monogram tile)
+│   │   ├── project-card.tsx    # One curated project — thumbnail card (screenshot or monogram tile); hover styling is CSS-only via Tailwind hover/group-hover utilities (no React state)
 │   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + curated tag-pill filter + 2-column card grid with View Transitions on filter; first 6 cards always visible, the rest are gated behind a CSS-slide Show more/less control (exports ProjectGrid)
-│   │   ├── writing.tsx         # Live recent blog posts
-│   │   ├── support-block.tsx   # Ko-fi + donate call-to-action
+│   │   ├── writing.tsx         # Live recent blog posts (cv-defer; deferred layout/paint until scrolled near)
+│   │   ├── support-block.tsx   # Ko-fi + donate call-to-action (cv-defer)
 │   │   ├── error-boundary.tsx  # Render-error boundary wrapping live-data sections
-│   │   └── site-footer.tsx     # Copyright line
+│   │   └── site-footer.tsx     # Copyright line (cv-defer)
 │   ├── data/                   # Static content
 │   │   ├── identity.ts         # Identity, intro-letter, support copy
 │   │   ├── skills.ts           # Tech-stack categories (+ per-category color)
@@ -159,6 +160,30 @@ landing-page/
 
 - **Static export over SSR:** the site is content-only and hosted on GitHub
   Pages; a static export keeps hosting free and simple.
+- **Inline SVG icons over an icon library:** the six icons used by the UI
+  (`Github`, `BookOpen`, `MapPin`, `Lock`, `ChevronDown`, `ChevronUp`) live in
+  `src/components/icons.tsx` as inline SVG components. Paths are copied
+  verbatim from `lucide-react` v0.460.0 and the default SVG attributes mirror
+  lucide's `defaultAttributes` (24×24 viewBox, `currentColor` stroke,
+  `strokeWidth=2`, `round` caps/joins) so the rendered output is
+  pixel-identical to lucide. This removes the `lucide-react` runtime
+  dependency, simplifies the dependency tree, and avoids shipping any
+  unreferenced icons.
+- **CSS-only hover on project cards:** `ProjectCard` does not track hover in
+  React state. Background, border, and the trailing arrow's `translateX` are
+  driven entirely by Tailwind `hover:` and `group-hover:` utilities, so the
+  card neither re-renders nor wires `onMouseEnter` / `onMouseLeave` listeners
+  on each of the up-to-21 cards.
+- **`content-visibility` for below-fold sections:** `Writing`, `SupportBlock`,
+  and `SiteFooter` carry a `.cv-defer` utility (defined in
+  `src/app/globals.css` as `content-visibility: auto`) plus an inline
+  per-section `contain-intrinsic-size` (540 / 280 / 80 px). On the single-column
+  mobile layout these sit well below the initial viewport, so the browser
+  skips their layout and paint until they scroll near — the per-section
+  intrinsic size reserves placeholder height to prevent scrollbar jumps, and
+  after first render the browser remembers the real size. Targets are limited
+  to sections that don't participate in View Transitions; `ProjectGrid` is
+  intentionally excluded because its filter morph requires persistent layout.
 - **No self-hosted CJK web font:** an earlier build shipped Noto Sans TC as a
   ~1.7 MB self-hosted `.woff2`, which dominated the critical path while only a
   few dozen CJK glyphs ever appeared on the page (mostly project titles).

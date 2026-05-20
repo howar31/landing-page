@@ -153,3 +153,11 @@ body {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Below-fold sections skip layout/paint until scrolled near. Each consumer
+   pairs this with its own `contain-intrinsic-size` to reserve a height,
+   preventing scrollbar jumps; the browser then remembers the real size
+   after first render. */
+.cv-defer {
+  content-visibility: auto;
+}
