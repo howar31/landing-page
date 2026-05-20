@@ -72,6 +72,10 @@ export function IdentityCard() {
         <img
           src={identity.avatar}
           alt={identity.name}
+          width={132}
+          height={132}
+          fetchPriority="high"
+          decoding="async"
           style={{
             boxSizing: "content-box",
             width: "100%",

@@ -14,9 +14,9 @@ const config: Config = {
         w3: "3000px",
       },
       fontFamily: {
-        sans: ["var(--font-noto-sans)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+        sans: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", "sans-serif"],
         mono: ["var(--font-jetbrains-mono)", "Consolas", "Monaco", "monospace"],
-        display: ["var(--font-atkinson)", "var(--font-noto-sans)", "sans-serif"],
+        display: ["var(--font-atkinson)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", "sans-serif"],
       },
     },
   },

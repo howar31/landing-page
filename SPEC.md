@@ -32,16 +32,24 @@ backend and no authentication.
   The content max-width steps up from 1180px to 1760px across the large-display
   breakpoints so the page scales to 4K without over-long text lines (prose
   blocks carry their own narrower caps).
-- **Fonts:** Noto Sans TC and Atkinson Hyperlegible Next are self-hosted
-  (`src/app/fonts/*.woff2`) via `next/font/local`; JetBrains Mono via
-  `next/font/google`.
+- **Fonts:** Atkinson Hyperlegible Next is self-hosted
+  (`src/app/fonts/AtkinsonHyperlegibleNext.woff2`) via `next/font/local`;
+  JetBrains Mono is fetched at build time and self-hosted via
+  `next/font/google`. Body and heading text otherwise falls back to the
+  platform's native UI stack — `-apple-system` / `BlinkMacSystemFont` /
+  `Segoe UI` for Latin and `PingFang TC` / `Microsoft JhengHei` /
+  `Noto Sans CJK TC` for Chinese — so the page ships no CJK web font.
 - **Metadata / PWA:** `src/data/config.ts` holds site metadata (title,
   description, keywords, OpenGraph, `icons`, `manifest`), consumed by
   `src/app/layout.tsx` through the Next.js Metadata API. The site is an
   installable PWA — `public/manifest.webmanifest` declares 192/512 icons with
   the dark `#020617` theme/background color; `src/app/favicon.ico` and
   `public/apple-touch-icon.png` complete the icon set. Avatar, favicon, and PWA
-  icons are all derived from one shared portrait source.
+  icons are all derived from one shared portrait source. The avatar shipped to
+  the page (`public/avatar-2025.webp`) is a 264×264 WebP sized for the largest
+  rendered footprint (132 CSS px at 2× DPR); its `<img>` carries explicit
+  `width`/`height`, `fetchPriority="high"`, and `decoding="async"` so it can
+  serve as the LCP element without contributing to CLS.
 - **Data:** Static content lives in `src/data/`. Two parts are fetched live in
   the browser (no API keys, public endpoints):
   - GitHub API (`api.github.com`) — public repo count, the most recently
@@ -151,6 +159,19 @@ landing-page/
 
 - **Static export over SSR:** the site is content-only and hosted on GitHub
   Pages; a static export keeps hosting free and simple.
+- **No self-hosted CJK web font:** an earlier build shipped Noto Sans TC as a
+  ~1.7 MB self-hosted `.woff2`, which dominated the critical path while only a
+  few dozen CJK glyphs ever appeared on the page (mostly project titles).
+  Body and heading text now relies on the platform's native CJK stack
+  (`PingFang TC` / `Microsoft JhengHei` / `Noto Sans CJK TC`) so no CJK font
+  weight is sent over the wire — trading a fully uniform glyph set for a
+  ~1.7 MB first-load saving. Only the Atkinson display face and JetBrains
+  Mono remain as actual font payloads.
+- **Avatar sized to its rendered footprint:** the avatar is shipped as a
+  264×264 WebP — exactly twice the largest CSS size (132 px) so it remains
+  sharp at 2× DPR without overdraw — and the `<img>` declares
+  `width`/`height` plus `fetchPriority="high"` / `decoding="async"` so the
+  LCP element loads with hinting and reserves its layout box.
 - **Client-side live data over build-time fetch:** both the GitHub API and the
   blog RSS feed send permissive CORS headers, so the browser fetches them
   directly — keeping content fresh without scheduled rebuilds, at the cost of a

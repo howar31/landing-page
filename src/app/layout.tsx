@@ -4,12 +4,6 @@ import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/data/config";
 
-const notoSansTC = localFont({
-  src: "./fonts/NotoSansTC.woff2",
-  variable: "--font-noto-sans",
-  display: "swap",
-});
-
 const atkinson = localFont({
   src: "./fonts/AtkinsonHyperlegibleNext.woff2",
   variable: "--font-atkinson",
@@ -38,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${notoSansTC.variable} ${atkinson.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+        className={`${atkinson.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
         {children}
       </body>

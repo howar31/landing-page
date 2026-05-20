@@ -27,7 +27,7 @@ A single static page built as a two-column "personal card":
 - **Framework:** [Next.js 14](https://nextjs.org/) (App Router, static export)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/) with design tokens
 - **Icons:** [Lucide React](https://lucide.dev/)
-- **Fonts:** Noto Sans TC + Atkinson Hyperlegible Next (self-hosted), JetBrains Mono
+- **Fonts:** Atkinson Hyperlegible Next (self-hosted), JetBrains Mono; CJK falls back to the system stack (PingFang TC / Microsoft JhengHei / Noto Sans CJK TC)
 - **Tests:** [Vitest](https://vitest.dev/)
 - **Hosting:** GitHub Pages (static) via GitHub Actions, custom domain howar31.com
 

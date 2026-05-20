@@ -5,7 +5,7 @@ export const identity = {
   location: "The Pale Blue Dot 🌌",
   status: "Open to interesting problems",
   since: "1995",
-  avatar: "/avatar-2025.jpg",
+  avatar: "/avatar-2025.webp",
   music: { label: "♪ on repeat", text: "Lo-fi beats · late-night coding" },
   socials: [
     { label: "GitHub", href: "https://github.com/howar31" },
