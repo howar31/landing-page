@@ -1,4 +1,4 @@
-import { readCache, writeCache } from "./cache";
+import { readCache, readStaleCache, writeCache } from "./cache";
 
 export interface Repo {
   name: string;
@@ -76,21 +76,37 @@ export async function fetchRepoLanguages(
   }
 }
 
-export async function fetchRecentRepos(limit = 3): Promise<Repo[]> {
+export interface RecentRepos {
+  repos: Repo[];
+  stale: boolean;
+}
+
+export async function fetchRecentRepos(limit = 3): Promise<RecentRepos> {
   const cached = readCache<Repo[]>("gh-repos", TTL_MS);
-  if (cached) return cached.slice(0, limit);
-  const res = await fetch(
-    `https://api.github.com/users/${USER}/repos?sort=pushed&direction=desc&per_page=12`,
-  );
-  if (!res.ok) throw new Error(`GitHub repos HTTP ${res.status}`);
-  const repos = parseRepos(await res.json());
-  const top = repos.slice(0, limit);
-  const languages = await Promise.all(
-    top.map((r) => fetchRepoLanguages(r.name)),
-  );
-  top.forEach((r, i) => {
-    r.languages = languages[i];
-  });
-  writeCache("gh-repos", repos);
-  return top;
+  if (cached) return { repos: cached.slice(0, limit), stale: false };
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/users/${USER}/repos?sort=pushed&direction=desc&per_page=12`,
+    );
+    if (!res.ok) throw new Error(`GitHub repos HTTP ${res.status}`);
+    const repos = parseRepos(await res.json());
+    const top = repos.slice(0, limit);
+    const languages = await Promise.all(
+      top.map((r) => fetchRepoLanguages(r.name)),
+    );
+    top.forEach((r, i) => {
+      r.languages = languages[i];
+    });
+    writeCache("gh-repos", repos);
+    return { repos: top, stale: false };
+  } catch (e) {
+    // Fresh fetch failed (rate-limit, offline, etc). Fall back to whatever
+    // we've ever cached so the section keeps rendering. Only re-throw when
+    // there's truly no prior data to show — that's the one case where the
+    // component should hide itself.
+    const stale = readStaleCache<Repo[]>("gh-repos");
+    if (stale) return { repos: stale.slice(0, limit), stale: true };
+    throw e;
+  }
 }

@@ -17,12 +17,16 @@ backend and no authentication.
   `@keyframes` defined in `src/app/globals.css`. Custom breakpoints — `feed`
   (880px) for the two-column ↔ single-column switch, plus `w1`/`w2`/`w3`
   (1920/2400/3000px) for large-display width stepping.
-- **Motion:** the ambient glow, breathing accent dots, and avatar glow are CSS
-  `@keyframes`; live stat numbers count up via the `useCountUp` hook (the
-  "Since" stat counts *down* from the current year to the founding year; all
-  roll in over a 3s ease-out-quint deceleration). A global
-  `prefers-reduced-motion` rule in `globals.css` disables every animation and
-  transition at once.
+- **Motion:** the ambient glow, breathing accent dots, avatar glow, intro
+  letter's CRT flicker, and the trailing cursor blink are CSS `@keyframes`;
+  live stat numbers count up via the `useCountUp` hook (the "Since" stat
+  counts *down* from the current year to the founding year; all roll in over
+  a 3s ease-out-quint deceleration). The Featured-work tag filter uses the
+  native View Transitions API; Show more / Show less uses a CSS
+  `grid-template-rows: 0fr ↔ 1fr` slide. A global `prefers-reduced-motion`
+  rule in `globals.css` disables every animation and transition at once;
+  the typewriter / slide / View-Transition paths each check the media query
+  themselves so they degrade to instant.
 - **Layout:** A two-column "personal card" layout — a sticky `IdentityCard`
   rail plus a scrolling content feed. Collapses to a single column below 880px.
   The content max-width steps up from 1180px to 1760px across the large-display
@@ -45,8 +49,12 @@ backend and no authentication.
   - The blog RSS feed (`blog.howar31.com/index.xml`) — recent posts and post
     count.
   Both go through `useRemoteData`, are cached in `localStorage` with a 30-minute
-  TTL, show loading skeletons, and degrade gracefully (the section hides or a
-  `—` placeholder shows) on failure.
+  TTL, show loading skeletons, and degrade gracefully on failure. The GitHub
+  feed additionally retains a stale-cache fallback: `fetchRecentRepos` returns
+  `{ repos, stale }`, and a fresh-fetch failure (e.g., rate-limit, offline)
+  serves the last-known cached repos with `stale: true`, surfaced as a low-key
+  `· cached` indicator next to the feed kicker. Only a section with no prior
+  data ever hides entirely.
 - **Data flow:** Server components compose the page; components that fetch or
   hold state are client components (`"use client"`). Fetch + parse helpers in
   `src/lib/` are pure where possible and unit-tested with Vitest.
@@ -67,11 +75,11 @@ landing-page/
 │   │   ├── top-bar.tsx         # Wordmark + status line
 │   │   ├── identity-card.tsx   # Sticky left rail; live repo/post counts
 │   │   ├── section-title.tsx   # Shared kicker + title
-│   │   ├── intro-letter.tsx    # "Hi there" introduction block
+│   │   ├── intro-letter.tsx    # "Hi there" introduction block, CRT-screen treatment + trailing blinking cursor
 │   │   ├── tech-stack.tsx      # Skill categories as stacked blocks
-│   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip + language bar
+│   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip — whole-row anchor, per-segment language-bar glow on hover, stale-cache indicator
 │   │   ├── project-card.tsx    # One curated project — thumbnail card (screenshot or monogram tile)
-│   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + curated tag-pill filter + 2-column card grid, View Transitions on filter (exports ProjectGrid)
+│   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + curated tag-pill filter + 2-column card grid with View Transitions on filter; first 6 cards always visible, the rest are gated behind a CSS-slide Show more/less control (exports ProjectGrid)
 │   │   ├── writing.tsx         # Live recent blog posts
 │   │   ├── support-block.tsx   # Ko-fi + donate call-to-action
 │   │   ├── error-boundary.tsx  # Render-error boundary wrapping live-data sections
@@ -82,9 +90,9 @@ landing-page/
 │   │   ├── projects.ts         # Curated project list (+ optional imageUrl/language/monogram)
 │   │   └── config.ts           # Site metadata / SEO
 │   └── lib/                    # Data layer + utilities (+ *.test.ts)
-│       ├── github.ts           # GitHub API fetch + parseRepos/parseLanguages
+│       ├── github.ts           # GitHub API fetch + parseRepos/parseLanguages; fetchRecentRepos returns { repos, stale } with stale-cache fallback
 │       ├── blog-feed.ts        # Blog RSS fetch + parseBlogFeed
-│       ├── cache.ts            # localStorage cache with TTL + schema version
+│       ├── cache.ts            # localStorage cache with TTL + schema version; readStaleCache bypasses TTL for fallback paths
 │       ├── format-date.ts      # Absolute + relative date formatting
 │       ├── languages.ts        # Language → color map
 │       ├── monogram.ts         # Derive a placeholder monogram for a project
@@ -169,8 +177,28 @@ landing-page/
   `prefers-reduced-motion` rule disables all of it. An earlier scroll-driven
   section reveal (`animation-timeline: view()`) was removed in favor of sections
   showing immediately — keeping the page free of scroll-tied entrance motion.
-- **Versioned cache + error boundaries:** every cached payload is stamped with
-  `CACHE_VERSION`; a deploy that changes a cached shape bumps it so stale
-  entries are rejected instead of crashing the new code. Live-data sections are
-  additionally wrapped in an error boundary so a render failure degrades that
-  section rather than blanking the page.
+- **Versioned cache + stale fallback + error boundaries:** every cached payload
+  is stamped with `CACHE_VERSION`; a deploy that changes a cached shape bumps
+  it so stale entries are rejected instead of crashing the new code. The
+  GitHub feed also has a stale-cache fallback path (`readStaleCache`) so a
+  transient API failure serves last-known data with a `· cached` indicator
+  rather than blanking the section. Live-data sections are additionally
+  wrapped in an error boundary so a render failure degrades that section
+  rather than blanking the page.
+- **Featured-work progressive disclosure:** the project grid renders the first
+  six cards as a stable grid; the remaining cards live in a sibling grid whose
+  outer wrapper animates `grid-template-rows` from `0fr` to `1fr` for an exact
+  slide that matches the content's natural height. A Show more button toggles
+  the slide; once expanded (by Show more *or* by any filter pill), it remains
+  expanded — collapsing is one-way via the Show less button, and only available
+  when no filter is active so a single click never both clears a filter and
+  collapses the list.
+- **Intro-letter CRT treatment:** the introduction block is wrapped in a
+  `.crt-screen` class that lays a `repeating-linear-gradient` scanline pattern
+  via `::after`, runs a near-imperceptible `crtFlicker` opacity wobble, and
+  adds a faint phosphor `text-shadow`. A 2px blinking cursor sits at the end
+  of the last paragraph; the trailing word is grouped with the cursor in a
+  `whitespace-nowrap` span so the cursor never wraps onto its own line at
+  the paragraph's `max-w-[620px]` limit. The wave emoji is a sibling of the
+  gradient-clipped greeting span (not a descendant) so it isn't masked by
+  the parent's `bg-clip: text`.

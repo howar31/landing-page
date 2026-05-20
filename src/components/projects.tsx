@@ -2,12 +2,15 @@
 
 import { useState, useMemo } from "react";
 import { flushSync } from "react-dom";
+import { ChevronDown, ChevronsDownUp } from "lucide-react";
 import { projects, moreProjects } from "@/data/projects";
 import { SectionTitle } from "@/components/section-title";
 import { GithubFeed } from "@/components/github-feed";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { ProjectCard } from "@/components/project-card";
 import { cn } from "@/lib/utils";
+
+const INITIAL_VISIBLE = 6;
 
 // Curated filter pills, in narrative order. The filter bar is decoupled from
 // the full tag vocabulary: descriptive tags (Website, Community, CLI) stay on
@@ -26,12 +29,30 @@ const PRIMARY_TAGS = [
 
 export function ProjectGrid() {
   const [activeTag, setActiveTag] = useState<string | null>(null);
+  // Collapsed by default; any filter interaction also expands so filtering
+  // operates on the full list rather than the visible six.
+  const [expanded, setExpanded] = useState(false);
 
   // Filter projects by active tag; show all when null
   const filteredProjects = useMemo(() => {
     if (activeTag === null) return projects;
     return projects.filter((project) => project.tags.includes(activeTag));
   }, [activeTag]);
+
+  // Always render the first six in a stable grid. Anything beyond goes into a
+  // separately rendered "extras" grid that we slide open/closed.
+  const firstSix = filteredProjects.slice(0, INITIAL_VISIBLE);
+  const extras = filteredProjects.slice(INITIAL_VISIBLE);
+
+  const hiddenCount = projects.length - INITIAL_VISIBLE;
+  const showMoreVisible = !expanded && activeTag === null && hiddenCount > 0;
+  // Collapse only makes sense when the list was expanded by the user and not
+  // narrowed by a filter; otherwise the filter is what's controlling visibility.
+  const showLessVisible = expanded && activeTag === null && hiddenCount > 0;
+  // Extras are visible when the user has expanded the list OR when a filter
+  // pushes the result past the initial six. In the filter case we forced
+  // expanded=true, so this reduces to a single condition.
+  const extrasOpen = expanded;
 
   // Stable view-transition-name per project, indexed off the full list, so a
   // card that survives a filter change morphs from its old grid slot to the new.
@@ -41,10 +62,7 @@ export function ProjectGrid() {
     return map;
   }, []);
 
-  function handleTagClick(tag: string) {
-    const apply = () =>
-      setActiveTag((current) => (current === tag ? null : tag));
-
+  function runWithTransition(apply: () => void) {
     const doc = document as Document & {
       startViewTransition?: (callback: () => void) => unknown;
     };
@@ -59,6 +77,27 @@ export function ProjectGrid() {
     } else {
       apply();
     }
+  }
+
+  function handleTagClick(tag: string) {
+    runWithTransition(() => {
+      // Any filter interaction implies expansion so the filter sees the full
+      // list, never just the initial six.
+      setExpanded(true);
+      setActiveTag((current) => (current === tag ? null : tag));
+    });
+  }
+
+  // Show more / Show less rely on a plain CSS slide on the extras container
+  // (max-height + opacity + margin-top). View Transitions are intentionally
+  // skipped here — they would snapshot cards while the container is collapsing
+  // and cause the slide to compete with a cross-fade.
+  function handleShowMore() {
+    setExpanded(true);
+  }
+
+  function handleShowLess() {
+    setExpanded(false);
   }
 
   const MoreIcon = moreProjects.icon;
@@ -98,11 +137,13 @@ export function ProjectGrid() {
         ))}
       </div>
 
-      {/* Curated project grid — one column below 880px, two above.
-         Each card carries a stable view-transition-name; the tag filter runs
-         inside a View Transition so removed cards fade and survivors glide. */}
+      {/* Curated project grid — split in two: the always-visible first six,
+         and an "extras" grid that slides open/closed. The split lets us drive
+         the show more/less animation with a max-height/opacity transition,
+         while each card still carries a stable view-transition-name so the
+         tag filter retains its morph/glide behavior. */}
       <div className="mt-4 grid grid-cols-1 feed:grid-cols-2 gap-3">
-        {filteredProjects.map((project) => (
+        {firstSix.map((project) => (
           <div
             key={project.title}
             style={{ viewTransitionName: transitionNames.get(project.title) }}
@@ -112,23 +153,75 @@ export function ProjectGrid() {
         ))}
       </div>
 
+      {extras.length > 0 && (
+        // Outer grid animates a single row from 0fr → 1fr — the row's natural
+        // size IS the inner content height, so the slide is exact. The inner
+        // `overflow-hidden` clips during the transition.
+        <div
+          className={cn(
+            "grid transition-[grid-template-rows,opacity,margin-top] duration-300 ease-out",
+            extrasOpen
+              ? "grid-rows-[1fr] opacity-100 mt-3"
+              : "grid-rows-[0fr] opacity-0 mt-0",
+          )}
+          aria-hidden={!extrasOpen}
+        >
+          <div className="overflow-hidden">
+            <div className="grid grid-cols-1 feed:grid-cols-2 gap-3">
+              {extras.map((project) => (
+                <div
+                  key={project.title}
+                  style={{ viewTransitionName: transitionNames.get(project.title) }}
+                >
+                  <ProjectCard project={project} onTagClick={handleTagClick} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {filteredProjects.length === 0 && (
         <div className="py-16 text-center font-mono text-[13px] text-white/35">
           No projects match this tag.
         </div>
       )}
 
-      {/* More projects link */}
-      <div className="mt-6 flex justify-end">
-        <a
-          href={moreProjects.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 font-mono text-[13px] text-white/50 hover:text-white/85 transition-colors"
-        >
-          {moreProjects.text}
-          <MoreIcon className="w-3.5 h-3.5" />
-        </a>
+      {/* Footer row: Show more/less centered, More on GitHub right-aligned.
+         The flex-1 spacers keep the button centered relative to the grid
+         regardless of whether the link sits next to it. */}
+      <div className="mt-6 flex items-center gap-3">
+        <div className="flex-1" />
+        {(showMoreVisible || showLessVisible) && (
+          <button
+            type="button"
+            onClick={showMoreVisible ? handleShowMore : handleShowLess}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-800 bg-slate-900/50 font-mono text-[12px] uppercase tracking-[0.14em] text-white/60 hover:border-slate-600 hover:text-white transition-all duration-200"
+          >
+            {showMoreVisible ? (
+              <>
+                Show {hiddenCount} more
+                <ChevronDown className="w-3.5 h-3.5" />
+              </>
+            ) : (
+              <>
+                Show less
+                <ChevronsDownUp className="w-3.5 h-3.5" />
+              </>
+            )}
+          </button>
+        )}
+        <div className="flex-1 flex justify-end">
+          <a
+            href={moreProjects.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 font-mono text-[13px] text-white/50 hover:text-white/85 transition-colors"
+          >
+            {moreProjects.text}
+            <MoreIcon className="w-3.5 h-3.5" />
+          </a>
+        </div>
       </div>
     </section>
   );

@@ -11,9 +11,10 @@ A single static page built as a two-column "personal card":
 
 - **Identity card** — a sticky rail with avatar, name, tagline, live GitHub repo
   & blog post counts, and social links.
-- **Content feed** — an introduction letter, a tech-stack list, a project
-  portfolio with a live "Latest on GitHub" strip and tag filtering, recent blog
-  posts, and a support call-to-action.
+- **Content feed** — an introduction letter (with a subtle CRT-screen treatment
+  and a trailing blinking cursor), a tech-stack list, a project portfolio with a
+  live "Latest on GitHub" strip, tag filtering, and a Show more / less control,
+  recent blog posts, and a support call-to-action.
 - **Responsive** — two columns on wide screens, a single column on phones.
 - **Ambient design** — a dim drifting glow, breathing accent dots, and
   decelerating count animations on the stats; all motion respects
@@ -33,7 +34,9 @@ A single static page built as a two-column "personal card":
 ## 🔄 Live Data
 
 Two parts update themselves — fetched in the browser, no API keys, cached in
-`localStorage` for 30 minutes, with graceful fallback if a request fails:
+`localStorage` for 30 minutes, with graceful fallback if a request fails (the
+GitHub feed additionally serves last-known stale data labeled `· cached` so a
+transient rate-limit or network blip never blanks the section):
 
 - **GitHub API** — public repo count, the most recently pushed repositories, and
   each one's language breakdown.

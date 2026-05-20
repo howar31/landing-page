@@ -56,6 +56,30 @@ body {
 @keyframes glowPulse2 { 0%,100% { opacity: 0.5; } 50% { opacity: 0.95; } }
 @keyframes glowScan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
 @keyframes wave { 0%,60%,100% { transform: rotate(0deg); } 10%,30% { transform: rotate(14deg); } 20% { transform: rotate(-8deg); } 40%,50% { transform: rotate(10deg); } }
+@keyframes cursorBlink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+@keyframes crtFlicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.985; } 53% { opacity: 0.97; } 56% { opacity: 1; } }
+
+/* CRT-screen treatment for the intro letter: subtle scanline pattern over
+   the whole article + a faint phosphor bloom on text + a near-imperceptible
+   flicker. Keep it light — meant to evoke CRT, not simulate one. */
+.crt-screen {
+  animation: crtFlicker 5s ease-in-out infinite;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.18);
+}
+.crt-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25),
+    rgba(0, 0, 0, 0.25) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 1;
+}
 @keyframes meter { 0%,100% { transform: scaleY(0.5); } 50% { transform: scaleY(1); } }
 @keyframes dotBreath { 0%,100% { box-shadow: 0 0 2px var(--dot-glow); transform: scale(1); } 50% { box-shadow: 0 0 9px var(--dot-glow); transform: scale(1.32); } }
 @keyframes avatarGlow { 0%,100% { box-shadow: 0 0 16px var(--avatar-glow); } 50% { box-shadow: 0 0 38px var(--avatar-glow); } }
