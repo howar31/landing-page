@@ -62,7 +62,7 @@ export function IntroLetter() {
       })}
 
       {/* Signoff */}
-      <div className="mt-[22px]">
+      <div className="mt-[22px] text-right">
         <span className="text-[22px] italic" style={{ color: "#a78bfa" }}>
           {introLetter.signoff}
         </span>

@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { flushSync } from "react-dom";
-import { ChevronDown, ChevronsDownUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { projects, moreProjects } from "@/data/projects";
 import { SectionTitle } from "@/components/section-title";
 import { GithubFeed } from "@/components/github-feed";
@@ -58,7 +58,9 @@ export function ProjectGrid() {
   // card that survives a filter change morphs from its old grid slot to the new.
   const transitionNames = useMemo(() => {
     const map = new Map<string, string>();
-    projects.forEach((project, i) => map.set(project.title, `project-card-${i}`));
+    projects.forEach((project, i) =>
+      map.set(project.title, `project-card-${i}`)
+    );
     return map;
   }, []);
 
@@ -67,7 +69,7 @@ export function ProjectGrid() {
       startViewTransition?: (callback: () => void) => unknown;
     };
     const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
+      "(prefers-reduced-motion: reduce)"
     ).matches;
 
     // View Transitions: removed cards fade out, survivors glide to their new
@@ -162,7 +164,7 @@ export function ProjectGrid() {
             "grid transition-[grid-template-rows,opacity,margin-top] duration-300 ease-out",
             extrasOpen
               ? "grid-rows-[1fr] opacity-100 mt-3"
-              : "grid-rows-[0fr] opacity-0 mt-0",
+              : "grid-rows-[0fr] opacity-0 mt-0"
           )}
           aria-hidden={!extrasOpen}
         >
@@ -171,7 +173,9 @@ export function ProjectGrid() {
               {extras.map((project) => (
                 <div
                   key={project.title}
-                  style={{ viewTransitionName: transitionNames.get(project.title) }}
+                  style={{
+                    viewTransitionName: transitionNames.get(project.title),
+                  }}
                 >
                   <ProjectCard project={project} onTagClick={handleTagClick} />
                 </div>
@@ -187,16 +191,15 @@ export function ProjectGrid() {
         </div>
       )}
 
-      {/* Footer row: Show more/less centered, More on GitHub right-aligned.
-         The flex-1 spacers keep the button centered relative to the grid
-         regardless of whether the link sits next to it. */}
-      <div className="mt-6 flex items-center gap-3">
-        <div className="flex-1" />
-        {(showMoreVisible || showLessVisible) && (
+      {/* Footer row: Show more/less on the left, more on GitHub on the right —
+         both rendered as plain mono text links so the row stays compact on
+         narrow viewports (the old pill button forced the GitHub link to wrap). */}
+      <div className="mt-6 flex items-center justify-between gap-3">
+        {showMoreVisible || showLessVisible ? (
           <button
             type="button"
             onClick={showMoreVisible ? handleShowMore : handleShowLess}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-800 bg-slate-900/50 font-mono text-[12px] uppercase tracking-[0.14em] text-white/60 hover:border-slate-600 hover:text-white transition-all duration-200"
+            className="inline-flex items-center gap-1.5 font-mono text-[13px] text-white/50 hover:text-white/85 transition-colors"
           >
             {showMoreVisible ? (
               <>
@@ -206,22 +209,22 @@ export function ProjectGrid() {
             ) : (
               <>
                 Show less
-                <ChevronsDownUp className="w-3.5 h-3.5" />
+                <ChevronUp className="w-3.5 h-3.5" />
               </>
             )}
           </button>
+        ) : (
+          <span />
         )}
-        <div className="flex-1 flex justify-end">
-          <a
-            href={moreProjects.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-mono text-[13px] text-white/50 hover:text-white/85 transition-colors"
-          >
-            {moreProjects.text}
-            <MoreIcon className="w-3.5 h-3.5" />
-          </a>
-        </div>
+        <a
+          href={moreProjects.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 font-mono text-[13px] text-white/50 hover:text-white/85 transition-colors"
+        >
+          {moreProjects.text}
+          <MoreIcon className="w-3.5 h-3.5" />
+        </a>
       </div>
     </section>
   );

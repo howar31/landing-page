@@ -50,7 +50,7 @@ export function SupportBlock() {
               "transition-colors hover:text-white hover:border-white/60"
             )}
           >
-            more ways to support ↗
+            more ways ↗
           </a>
         </div>
       </div>
