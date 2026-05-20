@@ -11,10 +11,10 @@ A single static page built as a two-column "personal card":
 
 - **Identity card** — a sticky rail with avatar, name, tagline, live GitHub repo
   & blog post counts, and social links.
-- **Content feed** — an introduction letter (with a subtle CRT-screen treatment
-  and a trailing blinking cursor), a tech-stack list, a project portfolio with a
-  live "Latest on GitHub" strip, tag filtering, and a Show more / less control,
-  recent blog posts, and a support call-to-action.
+- **Content feed** — an introduction letter framed inside a CRT-monitor bezel
+  (scanlines, phosphor glow, blinking cursor, pulsing power LED), a tech-stack
+  list, a project portfolio with a live "Latest on GitHub" strip, tag filtering,
+  and a Show more / less control, recent blog posts, and a support call-to-action.
 - **Responsive** — two columns on wide screens, a single column on phones.
 - **Ambient design** — a dim drifting glow, breathing accent dots, and
   decelerating count animations on the stats; all motion respects

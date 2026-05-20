@@ -58,14 +58,69 @@ body {
 @keyframes wave { 0%,60%,100% { transform: rotate(0deg); } 10%,30% { transform: rotate(14deg); } 20% { transform: rotate(-8deg); } 40%,50% { transform: rotate(10deg); } }
 @keyframes cursorBlink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
 @keyframes crtFlicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.985; } 53% { opacity: 0.97; } 56% { opacity: 1; } }
+@keyframes crtLedPulse { 0%, 100% { box-shadow: 0 0 5px rgba(52, 211, 153, 0.55); } 50% { box-shadow: 0 0 10px rgba(52, 211, 153, 0.9); } }
 
 /* CRT-screen treatment for the intro letter: subtle scanline pattern over
    the whole article + a faint phosphor bloom on text + a near-imperceptible
    flicker. Keep it light — meant to evoke CRT, not simulate one. */
 .crt-screen {
   animation: crtFlicker 5s ease-in-out infinite;
-  text-shadow: 0 0 1px rgba(255, 255, 255, 0.18);
+  /* Layered phosphor glow: a tight white halo close to the glyphs plus a
+     wider violet-tinted bloom that ties into the brand gradient. */
+  text-shadow:
+    0 0 2px rgba(255, 255, 255, 0.55),
+    0 0 8px rgba(167, 139, 250, 0.32);
 }
+/* CRT monitor bezel — wraps the screen with a plastic-frame look. */
+.crt-bezel {
+  position: relative;
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+  background: linear-gradient(180deg, #1c2435 0%, #141a28 100%);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.45);
+}
+
+/* Recessed glass area that houses the screen. The inset shadow gives the
+   impression that the screen sits a few millimeters inside the bezel. */
+.crt-screen-area {
+  position: relative;
+  overflow: hidden;
+  border-radius: 9px;
+  padding: 32px 28px 30px;
+  background: rgba(4, 9, 22, 0.92);
+  box-shadow:
+    inset 0 0 26px rgba(0, 0, 0, 0.7),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.02);
+}
+
+/* Bezel footer: power LED + a small mono brand mark. Sits below the
+   screen area, inside the bezel padding. */
+.crt-bezel-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 0 6px;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+}
+.crt-power-led {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #34d399;
+  box-shadow: 0 0 6px rgba(52, 211, 153, 0.65);
+  animation: crtLedPulse 3.2s ease-in-out infinite;
+}
+
 .crt-screen::after {
   content: "";
   position: absolute;
@@ -78,6 +133,17 @@ body {
     transparent 1px,
     transparent 3px
   );
+  /* Fade scanlines toward all four edges so the effect doesn't cut hard
+     against the page background. Vertical fade is the dominant axis; a mild
+     horizontal fade softens the left/right edges too. */
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%),
+    linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%),
+    linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  mask-composite: intersect;
   z-index: 1;
 }
 @keyframes meter { 0%,100% { transform: scaleY(0.5); } 50% { transform: scaleY(1); } }

@@ -75,8 +75,8 @@ landing-page/
 │   │   ├── top-bar.tsx         # Wordmark + status line
 │   │   ├── identity-card.tsx   # Sticky left rail; live repo/post counts
 │   │   ├── section-title.tsx   # Shared kicker + title
-│   │   ├── intro-letter.tsx    # "Hi there" introduction block, CRT-screen treatment + trailing blinking cursor
-│   │   ├── tech-stack.tsx      # Skill categories as stacked blocks
+│   │   ├── intro-letter.tsx    # "Hi there" introduction block, wrapped in a CRT-monitor bezel (screen recess + brand label + green power LED); CRT scanline/flicker/phosphor treatment + trailing blinking cursor
+│   │   ├── tech-stack.tsx      # Skill categories as stacked blocks; no top border because the CRT bezel above provides visual closure
 │   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip — whole-row anchor, per-segment language-bar glow on hover, stale-cache indicator
 │   │   ├── project-card.tsx    # One curated project — thumbnail card (screenshot or monogram tile)
 │   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + curated tag-pill filter + 2-column card grid with View Transitions on filter; first 6 cards always visible, the rest are gated behind a CSS-slide Show more/less control (exports ProjectGrid)
@@ -194,11 +194,19 @@ landing-page/
   when no filter is active so a single click never both clears a filter and
   collapses the list.
 - **Intro-letter CRT treatment:** the introduction block is wrapped in a
-  `.crt-screen` class that lays a `repeating-linear-gradient` scanline pattern
-  via `::after`, runs a near-imperceptible `crtFlicker` opacity wobble, and
-  adds a faint phosphor `text-shadow`. A 2px blinking cursor sits at the end
-  of the last paragraph; the trailing word is grouped with the cursor in a
-  `whitespace-nowrap` span so the cursor never wraps onto its own line at
-  the paragraph's `max-w-[620px]` limit. The wave emoji is a sibling of the
-  gradient-clipped greeting span (not a descendant) so it isn't masked by
-  the parent's `bg-clip: text`.
+  `.crt-bezel` device frame (rounded dark-plastic gradient + drop shadow +
+  top-edge highlight + a footer strip carrying a small mono brand label and a
+  pulsing green power LED). Inside the bezel sits a recessed `.crt-screen-area`
+  (deep navy glass with an inset shadow), and inside that the `<article>`
+  carries the `.crt-screen` class: a `repeating-linear-gradient` scanline
+  pattern via `::after` (faded toward all four edges with a stacked
+  `mask-image` so the scanlines don't cut hard against the bezel), a
+  near-imperceptible `crtFlicker` opacity wobble, and a layered phosphor
+  `text-shadow` (tight white halo + wider violet bloom). A 2px blinking cursor
+  sits at the end of the last paragraph; the trailing word is grouped with the
+  cursor in a `whitespace-nowrap` span so the cursor never wraps onto its own
+  line at the bezel's max width. The wave emoji is a sibling of the
+  gradient-clipped greeting span (not a descendant) so it isn't masked by the
+  parent's `bg-clip: text`. The bezel itself carries the reading-width cap
+  (`max-w-[720px]`) so paragraphs fill the screen edge-to-edge instead of
+  leaving an asymmetric right gutter inside the frame.

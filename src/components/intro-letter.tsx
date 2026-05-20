@@ -2,7 +2,9 @@ import { introLetter } from "@/data/identity";
 
 export function IntroLetter() {
   return (
-    <article className="crt-screen relative pt-6 feed:pt-8 pb-2">
+    <div className="crt-bezel mt-2 mb-6 feed:mb-8 max-w-[720px]">
+      <div className="crt-screen-area">
+        <article className="crt-screen relative">
       {/* Greeting + wave — emoji is a sibling of the gradient span, not a
          descendant, so it isn't masked by the parent's bg-clip:text. */}
       <div className="text-3xl feed:text-[38px] font-bold tracking-[-0.02em] leading-[1.1] text-white">
@@ -36,7 +38,7 @@ export function IntroLetter() {
           return (
             <p
               key={index}
-              className="mt-[18px] text-[17px] leading-[1.65] text-white/80 max-w-[620px]"
+              className="mt-[18px] text-[17px] leading-[1.65] text-white/80"
             >
               {paragraph}
             </p>
@@ -48,7 +50,7 @@ export function IntroLetter() {
         return (
           <p
             key={index}
-            className="mt-[18px] text-[17px] leading-[1.65] text-white/80 max-w-[620px]"
+            className="mt-[18px] text-[17px] leading-[1.65] text-white/80"
           >
             {head}
             <span className="whitespace-nowrap">
@@ -65,7 +67,13 @@ export function IntroLetter() {
           {introLetter.signoff}
         </span>
       </div>
-    </article>
+        </article>
+      </div>
+      <div className="crt-bezel-foot">
+        <span>Howar31 // Broadcast</span>
+        <span className="crt-power-led" aria-hidden />
+      </div>
+    </div>
   );
 }
 
