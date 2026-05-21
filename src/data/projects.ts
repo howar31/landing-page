@@ -40,6 +40,16 @@ export const projects: Project[] = [
     language: "TypeScript",
   },
   {
+    title: "slk",
+    description:
+      "A token-efficient, agent-facing Slack CLI — read, send, and manage channels, lists, and canvases for AI agents.",
+    url: "https://github.com/howar31/slk",
+    tags: ["AI", "Dev Tools", "CLI"],
+    imageUrl: "",
+    language: "Go",
+    monogram: "slk",
+  },
+  {
     title: "MAGI Workflow",
     description:
       "A multi-model workflow plugin for Claude Code with MAGI-style weighted voting.",
