@@ -105,7 +105,7 @@ export function ProjectGrid() {
   const MoreIcon = moreProjects.icon;
 
   return (
-    <section className="py-7 feed:py-8 border-t border-white/[0.06]">
+    <section className="py-7 feed:py-8">
       <SectionTitle kicker="// works" title="Things I've made" />
 
       <ErrorBoundary>

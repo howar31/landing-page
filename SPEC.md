@@ -85,7 +85,7 @@ landing-page/
 │   │   ├── section-title.tsx   # Shared kicker + title
 │   │   ├── icons.tsx           # Inline SVG icon components (paths from lucide-react v0.460.0); replaces the runtime lucide-react dependency
 │   │   ├── intro-letter.tsx    # "Hi there" introduction block, wrapped in a CRT-monitor bezel (screen recess + brand label + green power LED); CRT scanline/flicker/phosphor treatment + trailing blinking cursor
-│   │   ├── tech-stack.tsx      # Skill categories as stacked blocks; no top border because the CRT bezel above provides visual closure
+│   │   ├── tech-stack.tsx      # Skill categories as a stacked list — rules between rows, no framing border (sections carry no divider lines)
 │   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip — whole-row anchor, per-segment language-bar glow on hover, stale-cache indicator
 │   │   ├── project-card.tsx    # One curated project — thumbnail card (screenshot or monogram tile); hover styling is CSS-only via Tailwind hover/group-hover utilities (no React state)
 │   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + curated tag-pill filter + 2-column card grid with View Transitions on filter; first 6 cards always visible, the rest are gated behind a CSS-slide Show more/less control (exports ProjectGrid)

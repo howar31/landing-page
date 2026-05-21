@@ -2,7 +2,7 @@ import { introLetter } from "@/data/identity";
 
 export function IntroLetter() {
   return (
-    <div className="crt-bezel mt-2 mb-6 feed:mb-8 max-w-[720px]">
+    <div className="crt-bezel mb-6 feed:mb-8 max-w-[720px]">
       <div className="crt-screen-area">
         <article className="crt-screen relative">
       {/* Greeting + wave — emoji is a sibling of the gradient span, not a

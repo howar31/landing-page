@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 export function SupportBlock() {
   return (
     <section
-      className="py-7 feed:py-8 border-t border-white/[0.06] cv-defer"
+      className="py-7 feed:py-8 cv-defer"
       style={{ containIntrinsicSize: "auto 280px" }}
     >
       <div

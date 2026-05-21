@@ -17,15 +17,11 @@ export function TechStack() {
     <section className="py-7 feed:py-8">
       <SectionTitle kicker="// stack" title="What I build with" />
 
-      <ul
-        className="list-none m-0 p-0"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
-      >
+      <ul className="list-none m-0 p-0">
         {skillCategories.map((category, index) => {
           const breath = DOT_BREATH[index % DOT_BREATH.length];
-          // Skip the closing border on the last row: the next section's
-          // border-t already divides the sections, and a closing line here
-          // would frame the inter-section gap as an empty box.
+          // Skip the closing border on the last row so the list ends cleanly
+          // without a trailing line.
           const isLast = index === skillCategories.length - 1;
           return (
             <li
