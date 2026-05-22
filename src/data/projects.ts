@@ -15,7 +15,7 @@ export const projects: Project[] = [
   {
     title: "Scrum Poker",
     description:
-      "Serverless, peer-to-peer Scrum Poker that runs entirely in the browser over WebRTC.",
+      "Serverless, peer-to-peer Scrum Poker that runs in the browser over WebRTC, with zero-split-brain host migration.",
     url: "https://lab.howar31.com/scrum-poker/",
     tags: ["Web App", "Dev Tools"],
     imageUrl: "/scrum-poker.png",
@@ -24,18 +24,18 @@ export const projects: Project[] = [
   {
     title: "Codec Craft",
     description:
-      "In-browser codec workbench for WebM, GIF, and APNG cross-conversion — runs fully offline via ffmpeg.wasm.",
+      "In-browser codec workbench for WebM, GIF, and APNG cross-conversion — runs fully offline via ffmpeg.wasm, no upload.",
     url: "https://lab.howar31.com/codecraft/",
-    tags: ["Web App"],
+    tags: ["Web App", "Dev Tools"],
     imageUrl: "/codecraft.png",
     language: "JavaScript",
   },
   {
     title: "Hype Sign",
     description:
-      "An offline LED-sign PWA with multi-color gradients and a marquee mode.",
+      "An offline LED-sign / cheering-board PWA with multi-color gradients, marquee mode, and a font picker.",
     url: "https://lab.howar31.com/hype-sign/",
-    tags: ["Web App"],
+    tags: ["Web App", "Design"],
     imageUrl: "/hype-sign.png",
     language: "TypeScript",
   },
@@ -52,16 +52,8 @@ export const projects: Project[] = [
   {
     title: "MAGI Workflow",
     description:
-      "A multi-model workflow plugin for Claude Code with MAGI-style weighted voting.",
+      "A multi-model workflow plugin for Claude Code with planning dispatch, cross-CLI orchestration, and MAGI-style weighted voting.",
     url: "https://github.com/howar31/magi-workflow",
-    tags: ["AI", "Claude", "Dev Tools", "CLI"],
-    imageUrl: "",
-    language: "Shell",
-  },
-  {
-    title: "Claude Statusline",
-    description: "A custom 8-line colored status line for Claude Code.",
-    url: "https://github.com/howar31/claude-statusline",
     tags: ["AI", "Claude", "Dev Tools", "CLI"],
     imageUrl: "",
     language: "Shell",
@@ -69,7 +61,7 @@ export const projects: Project[] = [
   {
     title: "Claude Memory",
     description:
-      "A cross-directory memory index and /memorize skill for Claude Code's auto-memory.",
+      "Two Claude Code skills — /recall and /memorize — for cross-directory memory retrieval and explicit writes.",
     url: "https://github.com/howar31/claude-memory",
     tags: ["AI", "Claude", "Dev Tools", "CLI"],
     imageUrl: "",
@@ -85,20 +77,29 @@ export const projects: Project[] = [
     language: "Shell",
   },
   {
+    title: "Claude Statusline",
+    description: "A custom 8-line colored status line for Claude Code.",
+    url: "https://github.com/howar31/claude-statusline",
+    tags: ["AI", "Claude", "Dev Tools", "CLI"],
+    imageUrl: "/claude-statusline.png",
+    language: "Shell",
+  },
+  {
     title: "Monokai Color Scheme",
     description:
-      "A faithful Monokai color scheme for Ghostty, Neovim, and Vim.",
+      "A faithful Monokai color scheme with proper ANSI terminal mapping for Ghostty, Neovim, and Vim.",
     url: "https://github.com/howar31/monokai-sublimetext",
     tags: ["Design", "Dev Tools"],
-    imageUrl: "",
+    imageUrl: "/monokai.png",
     language: "Lua",
   },
   {
     title: "Oh-My-Zsh Powerline Theme",
-    description: "A modified Powerline style theme for Oh My Zsh.",
+    description:
+      "A modified Powerline-style theme for Oh My Zsh with Git status integration.",
     url: "https://github.com/howar31/oh-my-zsh-powerline-theme",
     tags: ["Design", "Dev Tools", "CLI"],
-    imageUrl: "",
+    imageUrl: "/oh-my-zsh.png",
     language: "Shell",
   },
   {
@@ -114,7 +115,7 @@ export const projects: Project[] = [
     description: "AutoHotKey script for auto fishing in Trove.",
     url: "https://github.com/howar31/Trove-AHK-AutoFish",
     tags: ["Gaming"],
-    imageUrl: "",
+    imageUrl: "/trove.png",
     language: "AutoHotkey",
   },
   {
