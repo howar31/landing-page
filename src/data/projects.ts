@@ -40,6 +40,15 @@ export const projects: Project[] = [
     language: "TypeScript",
   },
   {
+    title: "AC Caffeinate",
+    description:
+      "A macOS daemon that makes a Mac's stay-awake behavior power- and display-aware, overriding an unwanted caffeinate so a stowed laptop sleeps instead of overheating.",
+    url: "https://github.com/howar31/ac-caffeinate",
+    tags: ["Dev Tools", "CLI"],
+    imageUrl: "",
+    language: "Shell",
+  },
+  {
     title: "slk",
     description:
       "A token-efficient, agent-facing Slack CLI — read, send, and manage channels, lists, and canvases for AI agents.",
