@@ -56,13 +56,21 @@ backend and no authentication.
     pushed repos, and each displayed repo's language composition.
   - The blog RSS feed (`blog.howar31.com/index.xml`) — recent posts and post
     count.
-  Both go through `useRemoteData`, are cached in `localStorage` with a 30-minute
-  TTL, show loading skeletons, and degrade gracefully on failure. The GitHub
-  feed additionally retains a stale-cache fallback: `fetchRecentRepos` returns
-  `{ repos, stale }`, and a fresh-fetch failure (e.g., rate-limit, offline)
-  serves the last-known cached repos with `stale: true`, surfaced as a low-key
-  `· cached` indicator next to the feed kicker. Only a section with no prior
-  data ever hides entirely.
+  Both go through `useRemoteData`, show loading skeletons, and degrade
+  gracefully on failure, but they cache differently on purpose. The GitHub
+  calls are cached in `localStorage` with a 30-minute TTL because the
+  unauthenticated API allows only 60 requests/hour/IP and sends
+  `max-age=60`, so the HTTP cache cannot protect that quota; they also retain
+  a stale-cache fallback: `fetchRecentRepos` returns `{ repos, stale }`, and a
+  fresh-fetch failure (e.g., rate-limit, offline) serves the last-known cached
+  repos with `stale: true`, surfaced as a low-key `· cached` indicator next to
+  the feed kicker. Only a section with no prior data ever hides entirely.
+  The blog feed deliberately has **no** `localStorage` layer: it is a static
+  file served with `max-age=600` and an etag, so the browser HTTP cache already
+  covers repeat loads, and storing the parsed result would let an older
+  deploy's parse output survive a parser fix. `fetchBlogPosts` instead shares
+  one in-flight promise, because the identity card and the writing section both
+  request it on mount.
 - **Data flow:** Server components compose the page; components that fetch or
   hold state are client components (`"use client"`). Fetch + parse helpers in
   `src/lib/` are pure where possible and unit-tested with Vitest.
@@ -150,7 +158,18 @@ landing-page/
   not present in the initial static HTML and is unauthenticated (GitHub's
   60 req/hour/IP limit applies, mitigated by the localStorage cache). A fresh
   load makes 5 GitHub calls: profile, the repo list, and one `/languages` call
-  per displayed repo.
+  per displayed repo, so one shared egress IP (office NAT, CGNAT, campus)
+  supports only ~12 fresh visitors per hour before the API returns 403. A
+  first-time visitor on an exhausted IP has no cache to fall back on: the
+  Repos stat shows `—` and the GitHub feed hides itself. Accepted: a static
+  site cannot hold a token. The fix, if ever wanted, is to bake the data in at
+  build time using the Actions `GITHUB_TOKEN` and rebuild on a schedule.
+- GitHub Pages serves every file with a flat `cache-control: max-age=600`,
+  including the content-hashed `/_next/static/*` assets that are immutable by
+  construction. A returning visitor therefore revalidates ~27 assets after 10
+  minutes (304, empty body, ~220 ms each). Pages supports no custom headers, so
+  the only fixes are a CDN in front or a service worker; neither is judged
+  worth it for this site.
 - `Project.imageUrl` is a locally-hosted thumbnail when present; image-less
   projects render a generated monogram tile instead.
 - `Project.language` is set only for projects whose language is known;

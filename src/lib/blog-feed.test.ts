@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { parseBlogFeed } from "./blog-feed";
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { parseBlogFeed, fetchBlogPosts } from "./blog-feed";
 
 const SAMPLE = `<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0"><channel>
@@ -71,5 +71,46 @@ describe("parseBlogFeed excerpt sanitising", () => {
 
   it("decodes HTML entities left in the excerpt", () => {
     expect(parseBlogFeed(HUGO_SAMPLE)[2].excerpt).toBe("He said “hi”…");
+  });
+});
+
+describe("fetchBlogPosts", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    vi.unstubAllGlobals();
+  });
+
+  const okFetch = () =>
+    vi.fn().mockResolvedValue({ ok: true, text: async () => SAMPLE });
+
+  it("issues a single request when both consumers call it concurrently", async () => {
+    const fetchMock = okFetch();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const [a, b] = await Promise.all([fetchBlogPosts(), fetchBlogPosts()]);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(a).toEqual(b);
+  });
+
+  it("refetches on a later call instead of serving a stored copy", async () => {
+    const fetchMock = okFetch();
+    vi.stubGlobal("fetch", fetchMock);
+
+    await fetchBlogPosts();
+    await fetchBlogPosts();
+
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("recovers after a failed request rather than caching the rejection", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockRejectedValueOnce(new Error("offline"))
+      .mockResolvedValue({ ok: true, text: async () => SAMPLE });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(fetchBlogPosts()).rejects.toThrow("offline");
+    await expect(fetchBlogPosts()).resolves.toHaveLength(2);
   });
 });

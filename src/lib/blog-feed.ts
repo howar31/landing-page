@@ -1,5 +1,3 @@
-import { readCache, writeCache } from "./cache";
-
 export interface BlogPost {
   title: string;
   link: string;
@@ -8,8 +6,6 @@ export interface BlogPost {
 }
 
 const FEED_URL = "https://blog.howar31.com/index.xml";
-const CACHE_KEY = "blog-feed";
-const TTL_MS = 30 * 60 * 1000;
 
 function text(item: Element, tag: string): string {
   return item.getElementsByTagName(tag)[0]?.textContent?.trim() ?? "";
@@ -38,12 +34,27 @@ export function parseBlogFeed(xml: string): BlogPost[] {
   }));
 }
 
+/**
+ * The identity card (post count) and the writing section both call this on
+ * mount, so share one in-flight request instead of fetching the feed twice.
+ * Cleared on settle so a transient failure stays retryable.
+ *
+ * There is no localStorage layer here on purpose: the feed is a static file
+ * served with `cache-control: max-age=600` and an etag, so the HTTP cache
+ * already covers repeat loads, and it cannot serve a parsed shape from an
+ * older deploy the way a stored result can.
+ */
+let inFlight: Promise<BlogPost[]> | null = null;
+
 export async function fetchBlogPosts(): Promise<BlogPost[]> {
-  const cached = readCache<BlogPost[]>(CACHE_KEY, TTL_MS);
-  if (cached) return cached;
-  const res = await fetch(FEED_URL);
-  if (!res.ok) throw new Error(`Blog feed HTTP ${res.status}`);
-  const posts = parseBlogFeed(await res.text());
-  writeCache(CACHE_KEY, posts);
-  return posts;
+  if (!inFlight) {
+    inFlight = (async () => {
+      const res = await fetch(FEED_URL);
+      if (!res.ok) throw new Error(`Blog feed HTTP ${res.status}`);
+      return parseBlogFeed(await res.text());
+    })().finally(() => {
+      inFlight = null;
+    });
+  }
+  return inFlight;
 }
