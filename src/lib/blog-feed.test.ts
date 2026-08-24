@@ -37,3 +37,39 @@ describe("parseBlogFeed", () => {
     expect(parseBlogFeed("garbage")).toEqual([]);
   });
 });
+
+// Hugo puts the full post HTML in <description>, entity-escaped rather than in
+// CDATA. Several posts open with an inline <style> block for the image modal.
+const HUGO_SAMPLE = `<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel>
+  <item>
+    <title>Styled Post</title>
+    <description>&lt;style&gt;
+.vp-image-modal-card { max-width: 96vw; }
+&lt;/style&gt;
+&lt;p&gt;Body text.&lt;/p&gt;</description>
+  </item>
+  <item>
+    <title>Scripted Post</title>
+    <description>&lt;script&gt;console.log("tracking")&lt;/script&gt;
+&lt;p&gt;Body text.&lt;/p&gt;</description>
+  </item>
+  <item>
+    <title>Entity Post</title>
+    <description>&lt;p&gt;He said &amp;ldquo;hi&amp;rdquo;&amp;hellip;&lt;/p&gt;</description>
+  </item>
+</channel></rss>`;
+
+describe("parseBlogFeed excerpt sanitising", () => {
+  it("drops <style> blocks instead of leaking their CSS", () => {
+    expect(parseBlogFeed(HUGO_SAMPLE)[0].excerpt).toBe("Body text.");
+  });
+
+  it("drops <script> blocks instead of leaking their code", () => {
+    expect(parseBlogFeed(HUGO_SAMPLE)[1].excerpt).toBe("Body text.");
+  });
+
+  it("decodes HTML entities left in the excerpt", () => {
+    expect(parseBlogFeed(HUGO_SAMPLE)[2].excerpt).toBe("He said “hi”…");
+  });
+});

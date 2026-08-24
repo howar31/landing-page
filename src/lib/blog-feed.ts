@@ -15,6 +15,17 @@ function text(item: Element, tag: string): string {
   return item.getElementsByTagName(tag)[0]?.textContent?.trim() ?? "";
 }
 
+/**
+ * Feed descriptions carry the full post HTML. Parse it and read the rendered
+ * text so entities decode, dropping <style>/<script> first: stripping only
+ * their tags would leave the CSS or code behind as visible excerpt text.
+ */
+function toExcerpt(html: string): string {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  doc.querySelectorAll("style, script").forEach((el) => el.remove());
+  return doc.body.textContent?.trim() ?? "";
+}
+
 export function parseBlogFeed(xml: string): BlogPost[] {
   const doc = new DOMParser().parseFromString(xml, "application/xml");
   if (doc.getElementsByTagName("parsererror").length > 0) return [];
@@ -23,7 +34,7 @@ export function parseBlogFeed(xml: string): BlogPost[] {
     title: text(item, "title"),
     link: text(item, "link"),
     date: text(item, "pubDate"),
-    excerpt: text(item, "description").replace(/<[^>]*>/g, "").trim(),
+    excerpt: toExcerpt(text(item, "description")),
   }));
 }
 
