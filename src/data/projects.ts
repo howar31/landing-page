@@ -13,6 +13,15 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    title: "Glimpr",
+    description:
+      "Native screenshot, annotation, and screen-recording app for macOS and Windows, built on a frozen, pixel-faithful capture overlay.",
+    url: "https://glimpr.howar31.com",
+    tags: ["Desktop App", "Design", "Dev Tools"],
+    imageUrl: "/glimpr.png",
+    language: "Dart",
+  },
+  {
     title: "Scrum Poker",
     description:
       "Serverless, peer-to-peer Scrum Poker that runs in the browser over WebRTC, with zero-split-brain host migration.",
@@ -40,31 +49,20 @@ export const projects: Project[] = [
     language: "TypeScript",
   },
   {
-    title: "AC Caffeinate",
+    title: "Astro Pipeline",
     description:
-      "A macOS daemon that makes a Mac's stay-awake behavior power- and display-aware, overriding an unwanted caffeinate so a stowed laptop sleeps instead of overheating.",
-    url: "https://github.com/howar31/ac-caffeinate",
-    tags: ["Dev Tools", "CLI"],
-    imageUrl: "",
-    language: "Shell",
-  },
-  {
-    title: "slk",
-    description:
-      "A token-efficient, agent-facing Slack CLI — read, send, and manage channels, lists, and canvases for AI agents.",
-    url: "https://github.com/howar31/slk",
+      "Deterministic Milky Way post-processing for AI agents: stacked sky in, nebulosity out, no guessing.",
+    url: "https://github.com/howar31/astro-pipeline",
     tags: ["AI", "Dev Tools", "CLI"],
-    imageUrl: "",
-    language: "Go",
-    monogram: "slk",
+    imageUrl: "/astro-pipeline.jpg",
+    language: "Python",
   },
   {
-    title: "MAGI Workflow",
-    description:
-      "A multi-model workflow plugin for Claude Code with planning dispatch, cross-CLI orchestration, and MAGI-style weighted voting.",
-    url: "https://github.com/howar31/magi-workflow",
+    title: "Claude Statusline",
+    description: "A custom 8-line colored status line for Claude Code.",
+    url: "https://github.com/howar31/claude-statusline",
     tags: ["AI", "Claude", "Dev Tools", "CLI"],
-    imageUrl: "",
+    imageUrl: "/claude-statusline.png",
     language: "Shell",
   },
   {
@@ -86,11 +84,61 @@ export const projects: Project[] = [
     language: "Shell",
   },
   {
-    title: "Claude Statusline",
-    description: "A custom 8-line colored status line for Claude Code.",
-    url: "https://github.com/howar31/claude-statusline",
+    title: "AC Caffeinate",
+    description:
+      "A macOS daemon that makes a Mac's stay-awake behavior power- and display-aware, overriding an unwanted caffeinate so a stowed laptop sleeps instead of overheating.",
+    url: "https://github.com/howar31/ac-caffeinate",
+    tags: ["Dev Tools", "CLI"],
+    imageUrl: "",
+    language: "Shell",
+  },
+  {
+    title: "slk CLI",
+    description:
+      "A token-efficient, agent-facing Slack CLI — read, send, and manage channels, lists, and canvases for AI agents.",
+    url: "https://github.com/howar31/slk",
+    tags: ["AI", "Dev Tools", "CLI"],
+    imageUrl: "",
+    language: "Go",
+    monogram: "slk",
+  },
+  {
+    title: "dscrd CLI",
+    description:
+      "A token-efficient, agent-facing Discord CLI: read, send, and manage messages, threads, channels, and roles for AI agents.",
+    url: "https://github.com/howar31/dscrd",
+    tags: ["AI", "Dev Tools", "CLI"],
+    imageUrl: "",
+    language: "Go",
+    monogram: "dsc",
+  },
+  {
+    title: "tost CLI",
+    description:
+      "A local Tesla order tracker for macOS: pure-stdlib Python, no telemetry, with an audit-trail timeline and agent-friendly JSON output.",
+    url: "https://github.com/howar31/tost",
+    tags: ["AI", "Dev Tools", "CLI"],
+    imageUrl: "",
+    language: "Python",
+    monogram: "tost",
+  },
+  {
+    title: "gw2 CLI",
+    description:
+      "A read-only Guild Wars 2 API client for the terminal: token-efficient game data, account, trading post, and WvW/PvP lookups.",
+    url: "https://github.com/howar31/gldwrs2",
+    tags: ["AI", "Dev Tools", "CLI", "Gaming"],
+    imageUrl: "",
+    language: "Go",
+    monogram: "gw2",
+  },
+  {
+    title: "MAGI Workflow",
+    description:
+      "A multi-model workflow plugin for Claude Code with planning dispatch, cross-CLI orchestration, and MAGI-style weighted voting.",
+    url: "https://github.com/howar31/magi-workflow",
     tags: ["AI", "Claude", "Dev Tools", "CLI"],
-    imageUrl: "/claude-statusline.png",
+    imageUrl: "",
     language: "Shell",
   },
   {
