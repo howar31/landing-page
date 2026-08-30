@@ -57,7 +57,7 @@ Other commands: `npm run build` (static export to `out/`), `npm run lint`,
 Content is data-driven — edit the files in `src/data/`:
 
 - **`identity.ts`** — name, handle, tagline, location, status, the intro-letter
-  copy, social links, and the support / Ko-fi block copy.
+  copy, social links, and the support block copy (sponsor page first, Ko-fi second).
 - **`projects.ts`** — the curated project list. Each project has a title,
   description, url, tags, and optional `imageUrl` / `language` / `monogram`
   (the monogram overrides the auto-derived placeholder-tile initials). Tags are

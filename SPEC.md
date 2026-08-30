@@ -98,7 +98,7 @@ landing-page/
 │   │   ├── project-card.tsx    # One curated project — thumbnail card (screenshot or monogram tile); hover styling is CSS-only via Tailwind hover/group-hover utilities (no React state)
 │   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + curated tag-pill filter + 2-column card grid with View Transitions on filter; first 6 cards always visible, the rest are gated behind a CSS-slide Show more/less control (exports ProjectGrid)
 │   │   ├── writing.tsx         # Live recent blog posts (cv-defer; deferred layout/paint until scrolled near)
-│   │   ├── support-block.tsx   # Ko-fi + donate call-to-action (cv-defer)
+│   │   ├── support-block.tsx   # Sponsor-page CTA + Ko-fi secondary link (cv-defer)
 │   │   ├── error-boundary.tsx  # Render-error boundary wrapping live-data sections
 │   │   └── site-footer.tsx     # Copyright line (cv-defer)
 │   ├── data/                   # Static content

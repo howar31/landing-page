@@ -25,6 +25,7 @@ export const introLetter = {
 export const support = {
   kicker: "Support",
   body: "If something here saved you time or made you smile, you can buy me a coffee — no pressure, a kind word works too.",
+  // Sponsor page first (primary CTA); Ko-fi is the secondary link.
+  pageUrl: "https://donate.howar31.com",
   kofiUrl: "https://ko-fi.com/howar31",
-  moreUrl: "https://donate.howar31.com",
 };

@@ -27,10 +27,11 @@ export function SupportBlock() {
         {/* Actions */}
         <div className="mt-[18px] flex flex-wrap items-center gap-3">
           <a
-            href={support.kofiUrl}
+            href={support.pageUrl}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
+              "inline-flex items-center gap-2",
               "font-sans text-[15px] font-medium tracking-[0.01em]",
               "px-[18px] py-[10px] rounded-[10px]",
               "text-white no-underline",
@@ -38,13 +39,28 @@ export function SupportBlock() {
               "transition-colors hover:bg-blue-400/[0.28]"
             )}
           >
-            ☕ Buy me a coffee
+            {/* Sponsor-page mark: heart outline, see ~/.claude/skills/accept-donations/references/sponsor-mark.md */}
+            <svg
+              viewBox="0 0 24 24"
+              width={16}
+              height={16}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.8}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+            Sponsor
           </a>
 
           <span className="font-mono text-[12px] text-white/40">or</span>
 
           <a
-            href={support.moreUrl}
+            href={support.kofiUrl}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
@@ -53,7 +69,7 @@ export function SupportBlock() {
               "transition-colors hover:text-white hover:border-white/60"
             )}
           >
-            more ways ↗
+            Ko-fi ↗
           </a>
         </div>
       </div>
