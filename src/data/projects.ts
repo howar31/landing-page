@@ -22,6 +22,15 @@ export const projects: Project[] = [
     language: "Dart",
   },
   {
+    title: "Memfolio",
+    description:
+      "Browser extension for Chrome, Edge, and Firefox that saves an Instagram account's photos and videos into one folder per account and skips files already there.",
+    url: "https://memfolio.howar31.com",
+    tags: ["Web App"],
+    imageUrl: "/memfolio.png",
+    language: "TypeScript",
+  },
+  {
     title: "Scrum Poker",
     description:
       "Serverless, peer-to-peer Scrum Poker that runs in the browser over WebRTC, with zero-split-brain host migration.",
@@ -68,9 +77,27 @@ export const projects: Project[] = [
   {
     title: "Claude Memory",
     description:
-      "Two Claude Code skills — /recall and /memorize — for cross-directory memory retrieval and explicit writes.",
+      "Three Claude Code skills for its auto-memory: /recall across project directories, /memorize for explicit writes, and /tidy to keep each memory index under its load limit.",
     url: "https://github.com/howar31/claude-memory",
     tags: ["AI", "Claude", "Dev Tools", "CLI"],
+    imageUrl: "",
+    language: "Shell",
+  },
+  {
+    title: "Handoff",
+    description:
+      "A Claude Code skill that saves a session as an LLM-facing handoff document and loads it back, so a fresh agent can resume where the last one stopped.",
+    url: "https://github.com/howar31/handoff",
+    tags: ["AI", "Claude", "Dev Tools"],
+    imageUrl: "",
+    language: "Shell",
+  },
+  {
+    title: "Browser Automation",
+    description:
+      "A Claude Code skill for driving a headless browser with Puppeteer and Playwright: screenshots, network intercept, CDP debugging, and cross-browser E2E.",
+    url: "https://github.com/howar31/browser-automation",
+    tags: ["AI", "Claude", "Dev Tools"],
     imageUrl: "",
     language: "Shell",
   },

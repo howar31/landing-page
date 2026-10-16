@@ -95,7 +95,7 @@ landing-page/
 │   │   ├── intro-letter.tsx    # "Hi there" introduction block, wrapped in a CRT-monitor bezel (screen recess + brand label + green power LED); CRT scanline/flicker/phosphor treatment + trailing blinking cursor
 │   │   ├── tech-stack.tsx      # Skill categories as a stacked list — rules between rows, no framing border (sections carry no divider lines)
 │   │   ├── github-feed.tsx     # Live "Latest on GitHub" strip — whole-row anchor, per-segment language-bar glow on hover, stale-cache indicator
-│   │   ├── project-card.tsx    # One curated project — thumbnail card (screenshot or monogram tile); hover styling is CSS-only via Tailwind hover/group-hover utilities (no React state)
+│   │   ├── project-card.tsx    # One curated project — thumbnail card (local screenshot or square app icon, else a monogram tile); hover styling is CSS-only via Tailwind hover/group-hover utilities (no React state)
 │   │   ├── projects.tsx        # Projects section: feed + "Featured work" kicker + curated tag-pill filter + 2-column card grid with View Transitions on filter; first 6 cards always visible, the rest are gated behind a CSS-slide Show more/less control (exports ProjectGrid)
 │   │   ├── writing.tsx         # Live recent blog posts (cv-defer; deferred layout/paint until scrolled near)
 │   │   ├── support-block.tsx   # Sponsor-page CTA + Ko-fi secondary link (cv-defer)
@@ -192,7 +192,7 @@ landing-page/
   React state. Background, border, and the trailing arrow's `translateX` are
   driven entirely by Tailwind `hover:` and `group-hover:` utilities, so the
   card neither re-renders nor wires `onMouseEnter` / `onMouseLeave` listeners
-  on each of the up-to-21 cards.
+  on each card.
 - **`content-visibility` for below-fold sections:** `Writing`, `SupportBlock`,
   and `SiteFooter` carry a `.cv-defer` utility (defined in
   `src/app/globals.css` as `content-visibility: auto`) plus an inline
@@ -224,7 +224,7 @@ landing-page/
   `src/data/projects.ts` (including non-GitHub work), not an automated repo
   dump; the live GitHub strip complements it rather than replacing it.
 - **Thumbnail-card grid with View Transitions:** the portfolio renders as a
-  2-column thumbnail-card grid. Projects without a local screenshot show a
+  2-column thumbnail-card grid. Projects without a local image (screenshot or square icon) show a
   monogram tile derived from the title (`src/lib/monogram.ts`), tinted by the
   primary tag (`TAG_COLOR` map in `project-card.tsx`). The tag filter runs
   inside the native View Transitions API — removed cards fade, survivors glide
